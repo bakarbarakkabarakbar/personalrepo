@@ -42,9 +42,9 @@ void setup() {
 }
 
 void loop() {
-  if (analogRead(battIndicator)< 800) {
+  if (analogRead(battIndicator)< 760) {
     myDFPlayer.play(7); 
-    delay(100000); 
+    delay(15000); 
   }
   else{
   if (digitalRead(button1) == HIGH) {
