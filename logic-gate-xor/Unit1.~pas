@@ -1,0 +1,159 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, TeeProcs, TeEngine, Chart, Series, Math;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    RadioGroup1: TRadioGroup;
+    RadioButton1: TRadioButton;
+    Chart3: TChart;
+    Chart4: TChart;
+    Series3: TLineSeries;
+    Series4: TLineSeries;
+    Memo1: TMemo;
+    Memo2: TMemo;
+    Memo3: TMemo;
+    Memo4: TMemo;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Timer1: TTimer;
+    Chart2: TChart;
+    Series2: TLineSeries;
+    Chart1: TChart;
+    Series1: TLineSeries;
+    Chart5: TChart;
+    Series5: TLineSeries;
+    Chart6: TChart;
+    Series6: TLineSeries;
+    Chart7: TChart;
+    Series7: TLineSeries;
+    Chart8: TChart;
+    Series8: TLineSeries;
+    procedure Button1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  inputarray : Array[0..10, 0..1000] of Extended;
+  yarray : Array[0..1000] of Extended;
+  warray: Array[0..100,0..100,0..100] of Extended;
+  tetaarray, narray: Array[0..100,0..100] of Extended;
+  hasil : Extended;
+  i, j, k, frekuensi, perulangan : Integer;
+
+implementation
+
+{$R *.dfm}
+
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Memo1.Clear;
+  Memo2.Clear;
+  Memo3.Clear;
+  Memo4.Clear;
+  Series1.Clear;
+  Series2.Clear;
+  Series3.Clear;
+  Series4.Clear;
+  i:=0;
+  Timer1.Enabled:=True;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  Series1.AddXY(i,inputarray[0][i]);
+  Memo1.Lines.Add(floattostr(inputarray[0][i]));
+  Series2.AddXY(i,inputarray[1][i]);
+  Memo2.Lines.Add(floattostr(inputarray[1][i]));
+  Series3.AddXY(i,inputarray[2][i]);
+  Memo3.Lines.Add(floattostr(inputarray[2][i]));
+  if RadioButton1.Checked then
+  begin
+    // First Layer
+    for j := 0 to 3 do
+    begin
+      for k := 0 to 2 do
+      begin
+        narray[0][j]:=narray[0][j]+warray[0][j][k]*inputarray[k][i]
+      end;
+      if narray[0][j] = tetaarray[0][j] then narray[0][j] := 1 else narray[0][j] := 0;
+    end;
+
+    // Second Layer
+    for k := 0 to 3 do
+    begin
+      narray[1][0]:=narray[1][0]+warray[1][0][k]*narray[0][k];
+      if narray[1][0] = tetaarray[1][0] then narray[1][0] := 1 else narray[1][0] := 0;
+    end;
+
+    Series4.AddXY(i, narray[1][0]);
+    Series5.AddXY(i, narray[0][0]);
+    Series6.AddXY(i, narray[0][1]);
+    Series7.AddXY(i, narray[0][2]);
+    Series8.AddXY(i, narray[0][3]);
+    Memo4.Lines.Add(FloatToStr(narray[1][0]));
+    narray[1][0]:=0;
+    narray[0][0]:=0;
+    narray[0][1]:=0;
+    narray[0][2]:=0;
+    narray[0][3]:=0;
+  end;
+  i := i + 1;
+  if i = perulangan then Timer1.Enabled := False;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  perulangan := 1000;
+  frekuensi:=1;
+
+  warray[0][0][0]:=-1;
+  warray[0][0][1]:=-1;
+  warray[0][0][2]:=1;
+  warray[0][1][0]:=1;
+  warray[0][1][1]:=-1;
+  warray[0][1][2]:=-1;
+  warray[0][2][0]:=-1;
+  warray[0][2][1]:=1;
+  warray[0][2][2]:=-1;
+  warray[0][3][0]:=1;
+  warray[0][3][1]:=1;
+  warray[0][3][2]:=1;
+  warray[1][0][0]:=1;
+  warray[1][0][1]:=1;
+  warray[1][0][2]:=1;
+  warray[1][0][3]:=1;
+
+  tetaarray[0][0]:=1;
+  tetaarray[0][1]:=1;
+  tetaarray[0][2]:=1;
+  tetaarray[0][3]:=3;
+  tetaarray[1][0]:=1;
+
+  for i:=0 to perulangan do
+  begin
+    inputarray[0][i]:=sin(2*pi*i/perulangan*frekuensi);
+    inputarray[1][i]:=sin(2*pi*i/perulangan*frekuensi*2);
+    inputarray[2][i]:=sin(2*pi*i/perulangan*frekuensi*4);
+    if inputarray[0][i]<0 then inputarray[0][i]:=1 else inputarray[0][i]:=0;
+    if inputarray[1][i]<0 then inputarray[1][i]:=1 else inputarray[1][i]:=0;
+    if inputarray[2][i]<0 then inputarray[2][i]:=1 else inputarray[2][i]:=0;
+  end
+end;
+
+end.
