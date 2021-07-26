@@ -1,4 +1,14 @@
 # personalrepo
-Continuous Wavelet Transform
+Short Time Fourier Transform
 
-CWT is a method that you can use to analyse the signal in two dimension time-frequency domain. Today I use python notebook to create the signal analysis, you can download it if you want to try, the signal is given in the txt file.
+Fourier transform is a method for translating from time domain to frequency domain. But we want to make it one step further using short windowing instead push all the signal onto algorithm. In this case we are using three different windowing methord, which is 
+
+* Barlett, Best for random signal, Good Freqyency Resolution, Fair Spectral Leakage, Fair Amplitude Accuracy
+* Blackman, Best for random or mixed signal, Poor Frequency Resolution, Best Spectral Leakage, Good Amplitude Accuracy
+* Flat top, Best for sinusoids, Poor Frequency Resolution, Good Spectral Leakage, Best Amplitude Accuracy
+* Hanning, Best for random signal, Good Frequency Resolution, Good Spectral Leakage, Fair Amplitude Accuracy
+* Hamming, Best for random signal, Good Frequency Resolution, Fair Spectral Leakage, Fair Spectral Leakage
+* Kaiser-Bessel, Best for random signal, Fair Frequency Resolution, Good Spectral Leakage, Good Spectral Leakage
+* None, Best for transient and synchronous sampling signal, Best Frequency Resolution, Poor Spectral Leakage, Poor Amplitude Accuracy
+* Tukey, Best for random signal, Good Frequency Resolution, Poor Spectral Leakage, Poor Amplitude Accuracy
+* Welch, Best for random signal, Good Frequency Resolution, Good Spectral Leakage, Fair Amplitude Accuracy
