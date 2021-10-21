@@ -79,3 +79,39 @@ def cross_correlation(type, first_data, second_data):
         rxx = auto_correlation("normal", first_data)
         ryy = auto_correlation("normal", second_data)
         return rxy/(sqrt(rxx)*sqrt(ryy))
+    
+
+def matrix_multiplication(matrix_a, matrix_b):
+    """Contain function for matrix multiplication in sophisticated way
+    Use only for simple matrix form.
+
+    Parameters
+    ----------
+    matrix_a : 2d Array
+        Matrix with mxn rows and column respectively
+    matrix_b : 1d Array
+        Matrix with length of n respectively
+
+    Returns
+    -------
+    1d Array
+        Array with length of n
+
+    Raises
+    ------
+    Exception
+        If the rows of first matrix is not same length with second matrix
+    """
+    from numpy import shape, zeros
+    
+    row_first_matrix, column_first_matrix = shape(matrix_a)
+    column_second_matrix = len(matrix_b)
+    if row_first_matrix != column_second_matrix:
+        raise Exception("Please check rows and column on both matrix!")
+    
+    result = zeros(row_first_matrix)
+    for i in range(column_first_matrix):
+        for j in range(row_first_matrix):
+            result[i] += matrix_a[i][j] * matrix_b[j]
+    
+    return result
