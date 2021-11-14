@@ -1,0 +1,182 @@
+unit Unit3;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VclTee.TeeGDIPlus, Vcl.StdCtrls,
+  VCLTee.TeEngine, VCLTee.Series, Vcl.ExtCtrls, VCLTee.TeeProcs,
+  VCLTee.Chart;
+
+type
+  arraybaru = array[-9999..9999] of real;
+  TForm3 = class(TForm)
+    Chart1: TChart;
+    ECGOnline: TLineSeries;
+    PeakOnline: TLineSeries;
+    Chart2: TChart;
+    BPFonline: TLineSeries;
+    DerivativeOnline: TLineSeries;
+    Chart3: TChart;
+    LineSeries3: TLineSeries;
+    OnlineButton: TButton;
+    ListBox1: TListBox;
+    ListBox2: TListBox;
+    rcountedit: TEdit;
+    HeartBeatEdit: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    SquaringOnline: TLineSeries;
+    MAVOnline: TLineSeries;
+    ThresholdOnline: TLineSeries;
+    LPOnline: TLineSeries;
+    LNOnline: TLineSeries;
+    Label3: TLabel;
+    procedure OnlineButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+  i,j,k : integer;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit1, Unit2;
+
+procedure TForm3.OnlineButtonClick(Sender: TObject);
+var
+  temp, rpeak : extended;
+begin
+  ecgonline.Clear;
+  peakonline.Clear;
+  bpfonline.Clear;
+  derivativeonline.Clear;
+  squaringonline.Clear;
+  MAVonline.Clear;
+  ThresholdOnline.Clear;
+  LPOnline.Clear;
+  LNOnline.Clear;
+  Listbox1.Clear;
+  ListBox2.Clear;
+  rcountedit.Clear;
+  heartbeatedit.Clear;
+
+    for i := 0 to 5000 do
+  begin
+  form2.y[i] := 0;
+  form1.outsqr[i] := 0;
+  form1.outddt[i]:= 0;
+
+  yforward[i]:= 0;
+  ybackward[i]:= 0;
+  form1.outp[i]:= 0;
+  end;
+
+  for i := 0 downto -5000 do
+  begin
+
+  form1.outsqr[i]:= 0;
+  form1.outddt[i]:= 0;
+
+  yforward[i]:= 0;
+  ybackward[i]:= 0;
+  form1.outp[i]:= 0;
+  end;
+   listbox1.Items.Add('  Threshold  ');
+   listbox2.Items.Add('----R R Interval----');
+   if onlinebutton.Caption='Online' then begin
+    onlinebutton.Caption:='Stop';
+    i:= 0;
+    k:= 0;
+    repeat
+     label3.Caption:= 'Iterasi : '+ inttostr(i);
+     ecgonline.AddXY(i, xecg[i]);
+     outlpf[i]:= (2*outlpf[i-1])-outlpf[i-2]+ xecg[i]-(2*xecg[i-6])+ xecg[i-12];
+     series2.AddXY(i, outlpf[i]);
+     outhpf[i]:= outhpf[i-1]-(outlpf[i]/32)+outlpf[i-16]-outlpf[i-17]+(outlpf[i-32]/32);
+     series3.AddXY(i, outhpf[i]);
+     outfil:=outhpf;
+     outddt[i]:= ((2*outfil[i]) + outfil[i-1]- outfil[i-3]-(2*outfil[i-4]))/8;
+     series4.AddXY(i, outddt[i]);
+     outsqr[i]:= sqr(outddt[i]);
+     series5.AddXY(i, outsqr[i]);
+     ordemav:=32;
+     temp:= 0;
+     j:= 0;
+       repeat
+          temp:= temp + outsqr[i-j];
+          inc(j)
+       until (j= ordemav-1);
+     ybackward[i]:= (1/ordemav)*temp;
+     temp:= 0;
+     j:= 0;
+       repeat
+         temp:= temp +ybackward[i+j];
+         inc(j);
+       until (j= ordemav-1);
+     yforward[i]:= (1/ordemav)*temp;
+     series6.AddXY(i, yforward[i]);
+     max:= yforward[0];
+     if yforward[i]>= max then max:= yforward[i];
+
+
+      lp[i]:= 0.98*lp[i-1]+(1-0.98)*max;
+      series21.AddXY(i, lp[i]);
+      ln[i]:= 0.98*ln[i-1]+(1-0.98)*0.015;
+      series22.AddXY(i, ln[i]);
+      thr[i]:= ln[i] + (0.4*(lp[i]-ln[i]));
+      series20.AddXY(i, thr[i]);
+      listbox1.Items.Add('th['+inttostr(i)+']='+floattostr(thr[i]));
+
+      if yforward[i]> thr[i] then
+      begin
+      outp[i]:= 1;
+      inc(k);
+      end
+      else outp[i]:= 0;
+      series7.AddXY(i,outp[i]);
+      rpeak:= maxvalue(xecg);
+      k := 0;
+      if xecg[i]>= rpeak/1.5 then
+      series8.AddXY(i,xecg[i]);
+
+      if (i>70) and (outp[i]=1) and (outp[i-1]=0) then begin
+          bpm1[k]:=i;
+          inc(k);
+          j:=i-1;
+          repeat
+            if (outp[j]=1) and (outp[j-1]=0) then begin
+              bpm2[k]:=j;
+            end;
+            j:=j-1;
+          until (j=i-350);
+      end;
+
+       j:=0;
+
+      if (i>200) then begin         //200 biar ketemu 2 peak dulu
+          bpmfix[j]:=60/((bpm1[j]-bpm2[j+1])/fsecg);
+          listbox3.items.Add('RtoR['+inttostr(j)+']= '+floattostr(bpmfix[j]));
+          bpm:=bpmfix[j];
+          inc(j);
+      end;
+
+      edit2.Text:= floattostr(round(bpm));
+      //edit1.Text:= inttostr(j-1);
+      i:=i+1;
+      delay(5);
+    until (button6.Caption='Online') or (i=jmldataecg-1);
+   end
+
+    else if button6.Caption='Stop' then begin
+    button6.Caption:='Online';
+   end;
+end;
+
+end.

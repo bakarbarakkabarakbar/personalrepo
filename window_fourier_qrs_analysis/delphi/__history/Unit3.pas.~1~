@@ -1,0 +1,46 @@
+unit Unit3;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VclTee.TeeGDIPlus, Vcl.StdCtrls,
+  VCLTee.TeEngine, VCLTee.Series, Vcl.ExtCtrls, VCLTee.TeeProcs,
+  VCLTee.Chart;
+
+type
+  TForm3 = class(TForm)
+    Chart1: TChart;
+    Series1: TLineSeries;
+    Series2: TLineSeries;
+    Chart2: TChart;
+    BPFonline: TLineSeries;
+    DerivativeOnline: TLineSeries;
+    Chart3: TChart;
+    LineSeries3: TLineSeries;
+    OnlineButton: TButton;
+    ListBox1: TListBox;
+    ListBox2: TListBox;
+    rcountedit: TEdit;
+    HeartBeatEdit: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    SquaringOnline: TLineSeries;
+    MAVOnline: TLineSeries;
+    ThresholdOnline: TLineSeries;
+    LPOnline: TLineSeries;
+    LNOnline: TLineSeries;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,134 @@
+unit Unit2;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, dspinterface, math,
+  VclTee.TeeGDIPlus, Vcl.StdCtrls, VCLTee.TeEngine, VCLTee.Series,
+  Vcl.ExtCtrls, VCLTee.TeeProcs, VCLTee.Chart;
+
+type
+  arraybaru = array[-9999..9999] of real;
+
+  TForm2 = class(TForm)
+    Button1: TButton;
+    Chart1: TChart;
+    Series1: TLineSeries;
+    Chart2: TChart;
+    Series2: TLineSeries;
+    Button2: TButton;
+    Chart3: TChart;
+    LineSeries1: TLineSeries;
+    pole1: TLineSeries;
+    pole2: TLineSeries;
+    horizontal: TLineSeries;
+    vertical: TLineSeries;
+    zero1: TLineSeries;
+    zero2: TLineSeries;
+    ScrollBar1: TScrollBar;
+    ScrollBar2: TScrollBar;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    procedure Button1Click(Sender: TObject);
+    procedure bsf;
+    procedure pole;
+    procedure ScrollBar1Change(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure ScrollBar2Change(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  y,x : arraybaru;
+  end;
+
+var
+  Form2: TForm2;
+  i,j,k,n : integer;
+  r, teta, xp1, yp1, xp2, yp2 : extended;
+
+implementation
+
+
+
+{$R *.dfm}
+
+uses Unit1;
+
+
+{ TForm2 }
+
+procedure TForm2.bsf;
+begin
+  series2.Clear;
+  zero1.Clear;
+  zero2.Clear;
+  r:= scrollbar1.Position/10;
+  teta:= scrollbar2.Position*pi/180;
+
+  for i := 1 to form1.jmldataecg do
+    begin
+      x[i] := form1.xecgfilter[i];
+    end;
+
+
+  for n:= 1 to (form1.jmldataecg) do
+  begin
+   y[n]:= x[n] - (2*cos(teta)*x[n-1]) + x[n-2] + (2*cos(teta)*r*y[n-1]) - (sqr(r)*y[n-2]);
+   series2.AddXY(n, y[n]);
+  end;
+
+  zero1.AddXY(sqrt(2)/2,sqrt(2)/2);
+  zero2.AddXY(sqrt(2)/2,-sqrt(2)/2);
+
+end;
+
+procedure TForm2.Button1Click(Sender: TObject);
+begin
+  for i := 1 to form1.jmldataecg do
+    begin
+      series1.AddXY(i, form1.outhpf[i]);
+    end;
+end;
+
+procedure TForm2.Button2Click(Sender: TObject);
+begin
+  bsf;
+end;
+
+
+procedure TForm2.pole;
+begin
+  pole1.Clear;
+  pole2.Clear;
+
+  r:= 0.1*scrollbar1.Position;
+  teta:= scrollbar2.Position*pi/180;
+
+  xp1:=r*cos(teta);
+  yp1:=r*sin(teta);
+  xp2:=r*cos(-teta);
+  yp2:=r*sin(-teta);
+
+  pole1.AddXY(xp1,yp1);
+  pole2.AddXY(xp2,yp2);
+
+  label2.Caption:= 'R ' + floattostr(r);
+  label1.Caption:= 'Teta ' + inttostr(scrollbar2.Position);
+
+end;
+
+procedure TForm2.ScrollBar1Change(Sender: TObject);
+begin
+  pole;
+end;
+
+procedure TForm2.ScrollBar2Change(Sender: TObject);
+begin
+  pole;
+end;
+
+end.
+

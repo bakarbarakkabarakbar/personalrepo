@@ -1,0 +1,382 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 396
+  ClientWidth = 803
+  Color = clHighlightText
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Button1: TButton
+    Left = 8
+    Top = 343
+    Width = 81
+    Height = 41
+    Caption = 'Button1'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object Chart1: TChart
+    Left = 193
+    Top = 48
+    Width = 602
+    Height = 161
+    Legend.Font.Color = 4210752
+    Legend.Font.Height = -13
+    Legend.Font.Name = 'Verdana'
+    Legend.Frame.Visible = False
+    Legend.Transparent = True
+    Legend.Visible = False
+    Title.Font.Color = clGray
+    Title.Font.Height = -16
+    Title.Text.Strings = (
+      'FILTER PANTOMKINS')
+    BottomAxis.Grid.Visible = False
+    BottomAxis.LabelsFormat.Font.Color = clGray
+    BottomAxis.LabelsFormat.Font.Height = -13
+    BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+    BottomAxis.MinorTicks.Visible = False
+    BottomAxis.Title.Font.Color = 4210752
+    BottomAxis.Title.Font.Height = -15
+    DepthAxis.LabelsFormat.Font.Color = clGray
+    DepthAxis.LabelsFormat.Font.Height = -13
+    DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthAxis.MinorTicks.Visible = False
+    DepthAxis.Title.Font.Color = 4210752
+    DepthAxis.Title.Font.Height = -15
+    DepthTopAxis.LabelsFormat.Font.Color = clGray
+    DepthTopAxis.LabelsFormat.Font.Height = -13
+    DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthTopAxis.MinorTicks.Visible = False
+    DepthTopAxis.Title.Font.Color = 4210752
+    DepthTopAxis.Title.Font.Height = -15
+    LeftAxis.Axis.Visible = False
+    LeftAxis.LabelsFormat.Font.Color = clGray
+    LeftAxis.LabelsFormat.Font.Height = -13
+    LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+    LeftAxis.MinorTicks.Visible = False
+    LeftAxis.Title.Font.Color = 4210752
+    LeftAxis.Title.Font.Height = -15
+    RightAxis.LabelsFormat.Font.Color = clGray
+    RightAxis.LabelsFormat.Font.Height = -13
+    RightAxis.LabelsFormat.Font.Name = 'Verdana'
+    RightAxis.MinorTicks.Visible = False
+    RightAxis.Title.Font.Color = 4210752
+    RightAxis.Title.Font.Height = -15
+    TopAxis.LabelsFormat.Font.Color = clGray
+    TopAxis.LabelsFormat.Font.Height = -13
+    TopAxis.LabelsFormat.Font.Name = 'Verdana'
+    TopAxis.MinorTicks.Visible = False
+    TopAxis.Title.Font.Color = 4210752
+    TopAxis.Title.Font.Height = -15
+    View3D = False
+    View3DWalls = False
+    Color = clWhite
+    TabOrder = 1
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = -2
+    ColorPalette = (
+      14063991
+      6868991
+      4685823
+      14404225
+      10384222
+      9875024
+      4275174
+      9499647
+      13757072
+      10724259
+      12648447
+      15198183)
+    object Series1: TLineSeries
+      Marks.Brush.Color = 6868991
+      Marks.Font.Name = 'Verdana'
+      Marks.RoundSize = 0
+      Marks.Shadow.Visible = False
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+  end
+  object Chart2: TChart
+    Left = 193
+    Top = 223
+    Width = 602
+    Height = 162
+    Legend.Font.Color = 4210752
+    Legend.Font.Height = -13
+    Legend.Font.Name = 'Verdana'
+    Legend.Frame.Visible = False
+    Legend.Transparent = True
+    Legend.Visible = False
+    Title.Font.Color = clGray
+    Title.Font.Height = -16
+    Title.Text.Strings = (
+      'TChart')
+    BottomAxis.Grid.Visible = False
+    BottomAxis.LabelsFormat.Font.Color = clGray
+    BottomAxis.LabelsFormat.Font.Height = -13
+    BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+    BottomAxis.MinorTicks.Visible = False
+    BottomAxis.Title.Font.Color = 4210752
+    BottomAxis.Title.Font.Height = -15
+    DepthAxis.LabelsFormat.Font.Color = clGray
+    DepthAxis.LabelsFormat.Font.Height = -13
+    DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthAxis.MinorTicks.Visible = False
+    DepthAxis.Title.Font.Color = 4210752
+    DepthAxis.Title.Font.Height = -15
+    DepthTopAxis.LabelsFormat.Font.Color = clGray
+    DepthTopAxis.LabelsFormat.Font.Height = -13
+    DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthTopAxis.MinorTicks.Visible = False
+    DepthTopAxis.Title.Font.Color = 4210752
+    DepthTopAxis.Title.Font.Height = -15
+    LeftAxis.Axis.Visible = False
+    LeftAxis.LabelsFormat.Font.Color = clGray
+    LeftAxis.LabelsFormat.Font.Height = -13
+    LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+    LeftAxis.MinorTicks.Visible = False
+    LeftAxis.Title.Font.Color = 4210752
+    LeftAxis.Title.Font.Height = -15
+    RightAxis.LabelsFormat.Font.Color = clGray
+    RightAxis.LabelsFormat.Font.Height = -13
+    RightAxis.LabelsFormat.Font.Name = 'Verdana'
+    RightAxis.MinorTicks.Visible = False
+    RightAxis.Title.Font.Color = 4210752
+    RightAxis.Title.Font.Height = -15
+    TopAxis.LabelsFormat.Font.Color = clGray
+    TopAxis.LabelsFormat.Font.Height = -13
+    TopAxis.LabelsFormat.Font.Name = 'Verdana'
+    TopAxis.MinorTicks.Visible = False
+    TopAxis.Title.Font.Color = 4210752
+    TopAxis.Title.Font.Height = -15
+    View3D = False
+    View3DWalls = False
+    Color = clWhite
+    TabOrder = 2
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = -2
+    ColorPalette = (
+      14063991
+      6868991
+      4685823
+      14404225
+      10384222
+      9875024
+      4275174
+      9499647
+      13757072
+      10724259
+      12648447
+      15198183)
+    object Series2: TLineSeries
+      Marks.Brush.Color = 6868991
+      Marks.Font.Name = 'Verdana'
+      Marks.RoundSize = 0
+      Marks.Shadow.Visible = False
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+  end
+  object Button2: TButton
+    Left = 104
+    Top = 343
+    Width = 83
+    Height = 42
+    Caption = 'Button2'
+    TabOrder = 3
+  end
+  object Chart3: TChart
+    Left = 18
+    Top = 56
+    Width = 169
+    Height = 153
+    BackWall.Brush.Gradient.Direction = gdBottomTop
+    BackWall.Brush.Gradient.EndColor = 7895160
+    BackWall.Brush.Gradient.StartColor = 4605510
+    BackWall.Brush.Gradient.Visible = True
+    BackWall.Pen.Visible = False
+    BackWall.Transparent = False
+    Foot.Font.Color = clWhite
+    Foot.Font.Name = 'Verdana'
+    Gradient.Direction = gdBottomTop
+    Gradient.EndColor = 4605510
+    Gradient.StartColor = 4605510
+    Gradient.Visible = True
+    LeftWall.Color = 14745599
+    Legend.Brush.Gradient.Direction = gdBottomTop
+    Legend.Brush.Gradient.EndColor = 7895160
+    Legend.Brush.Gradient.StartColor = 4605510
+    Legend.Brush.Gradient.Visible = True
+    Legend.Font.Color = clWhite
+    Legend.Font.Name = 'Verdana'
+    Legend.Frame.Visible = False
+    Legend.Shadow.HorizSize = 0
+    Legend.Shadow.Transparency = 0
+    Legend.Visible = False
+    MarginBottom = 5
+    MarginLeft = 0
+    MarginRight = 9
+    MarginTop = 6
+    RightWall.Color = 14745599
+    Title.Font.Color = clWhite
+    Title.Font.Name = 'Verdana'
+    Title.Text.Strings = (
+      'TChart')
+    Title.Visible = False
+    BottomAxis.Automatic = False
+    BottomAxis.AutomaticMaximum = False
+    BottomAxis.AutomaticMinimum = False
+    BottomAxis.Axis.Color = 4210752
+    BottomAxis.Grid.Color = 11119017
+    BottomAxis.Grid.Visible = False
+    BottomAxis.LabelsFormat.Font.Color = clWhite
+    BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+    BottomAxis.Maximum = 1.000000000000000000
+    BottomAxis.Minimum = -1.000000000000000000
+    BottomAxis.MinorTicks.Visible = False
+    BottomAxis.Ticks.Color = 8553090
+    BottomAxis.TicksInner.Color = 11119017
+    BottomAxis.Title.Font.Color = clWhite
+    BottomAxis.Title.Font.Name = 'Verdana'
+    DepthAxis.Axis.Color = 4210752
+    DepthAxis.Grid.Color = 11119017
+    DepthAxis.LabelsFormat.Font.Color = clWhite
+    DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthAxis.MinorTicks.Visible = False
+    DepthAxis.Ticks.Color = 8553090
+    DepthAxis.TicksInner.Color = 11119017
+    DepthAxis.Title.Font.Color = clWhite
+    DepthAxis.Title.Font.Name = 'Verdana'
+    DepthTopAxis.Axis.Color = 4210752
+    DepthTopAxis.Grid.Color = 11119017
+    DepthTopAxis.LabelsFormat.Font.Color = clWhite
+    DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthTopAxis.MinorTicks.Visible = False
+    DepthTopAxis.Ticks.Color = 8553090
+    DepthTopAxis.TicksInner.Color = 11119017
+    DepthTopAxis.Title.Font.Color = clWhite
+    DepthTopAxis.Title.Font.Name = 'Verdana'
+    Emboss.Color = 12763842
+    Emboss.HorizSize = 17
+    Emboss.VertSize = 17
+    Frame.Visible = False
+    LeftAxis.Automatic = False
+    LeftAxis.AutomaticMaximum = False
+    LeftAxis.AutomaticMinimum = False
+    LeftAxis.Axis.Color = 4210752
+    LeftAxis.Grid.Color = 11119017
+    LeftAxis.Grid.Visible = False
+    LeftAxis.LabelsFormat.Font.Color = clWhite
+    LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+    LeftAxis.Maximum = 1.000000000000000000
+    LeftAxis.Minimum = -1.000000000000000000
+    LeftAxis.MinorTicks.Visible = False
+    LeftAxis.Ticks.Color = 8553090
+    LeftAxis.TicksInner.Color = 11119017
+    LeftAxis.Title.Font.Color = clWhite
+    LeftAxis.Title.Font.Name = 'Verdana'
+    RightAxis.Axis.Color = 4210752
+    RightAxis.Grid.Color = 11119017
+    RightAxis.LabelsFormat.Font.Color = clWhite
+    RightAxis.LabelsFormat.Font.Name = 'Verdana'
+    RightAxis.MinorTicks.Visible = False
+    RightAxis.Ticks.Color = 8553090
+    RightAxis.TicksInner.Color = 11119017
+    RightAxis.Title.Font.Color = clWhite
+    RightAxis.Title.Font.Name = 'Verdana'
+    Shadow.Color = 10658466
+    Shadow.HorizSize = 9
+    Shadow.Transparency = 40
+    Shadow.VertSize = 9
+    TopAxis.Axis.Color = 4210752
+    TopAxis.Grid.Color = 11119017
+    TopAxis.LabelsFormat.Font.Color = clWhite
+    TopAxis.LabelsFormat.Font.Name = 'Verdana'
+    TopAxis.MinorTicks.Visible = False
+    TopAxis.Ticks.Color = 8553090
+    TopAxis.TicksInner.Color = 11119017
+    TopAxis.Title.Font.Color = clWhite
+    TopAxis.Title.Font.Name = 'Verdana'
+    View3D = False
+    TabOrder = 4
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = -2
+    ColorPalette = (
+      5957320
+      14456410
+      2644710
+      1024230)
+    object Series3: TLineSeries
+      Marks.Font.Color = clWhite
+      Marks.Transparent = True
+      Pointer.InflateMargins = True
+      Pointer.Style = psDiagCross
+      Pointer.Visible = True
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+      Data = {00010000000000000000000000}
+      Detail = {0000000000}
+    end
+    object Series4: TLineSeries
+      Marks.Font.Color = clWhite
+      Marks.Transparent = True
+      Pointer.InflateMargins = True
+      Pointer.Style = psDiagCross
+      Pointer.Visible = True
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+      Data = {00010000000000000000000000}
+    end
+    object Series5: TLineSeries
+      Marks.Font.Color = clWhite
+      Marks.Transparent = True
+      Pointer.InflateMargins = True
+      Pointer.Style = psCircle
+      Pointer.Visible = True
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+      Data = {00010000000000000000000000}
+    end
+    object Series6: TLineSeries
+      Marks.Font.Color = clWhite
+      Marks.Transparent = True
+      SeriesColor = clNone
+      LinePen.Color = 905969664
+      LinePen.Width = 13
+      OutLine.Color = clDefault
+      OutLine.Width = 0
+      Pointer.HorizSize = 1
+      Pointer.InflateMargins = True
+      Pointer.SizeUnits = suAxis
+      Pointer.Style = psCircle
+      Pointer.VertSize = 1
+      Pointer.Visible = True
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+      Data = {00010000000000000000000000}
+    end
+  end
+end

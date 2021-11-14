@@ -1,0 +1,211 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'ONLINE'
+  ClientHeight = 539
+  ClientWidth = 927
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 52
+    Top = 74
+    Width = 52
+    Height = 13
+    Caption = 'R-COUNTS'
+  end
+  object Label2: TLabel
+    Left = 46
+    Top = 308
+    Width = 61
+    Height = 13
+    Caption = 'HEART BEAT'
+  end
+  object Chart1: TChart
+    Left = 168
+    Top = 8
+    Width = 751
+    Height = 169
+    Legend.CheckBoxes = True
+    Title.Text.Strings = (
+      'ECG SIGNAL')
+    BottomAxis.Title.Caption = 'Sequence[n]'
+    LeftAxis.Title.Caption = 'Amplitudo'
+    View3D = False
+    TabOrder = 0
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 18
+    object Series1: TLineSeries
+      Title = 'ECG'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object Series2: TLineSeries
+      Title = 'Peak'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+  end
+  object Chart2: TChart
+    Left = 168
+    Top = 183
+    Width = 751
+    Height = 169
+    Legend.CheckBoxes = True
+    Title.Text.Strings = (
+      'FILTERED ECG')
+    BottomAxis.Title.Caption = 'Sequence[n]'
+    LeftAxis.Title.Caption = 'Amplitudo'
+    View3D = False
+    TabOrder = 1
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 18
+    object BPFonline: TLineSeries
+      Title = 'BPF'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object DerivativeOnline: TLineSeries
+      Title = 'Derivative'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object SquaringOnline: TLineSeries
+      Title = 'Squaring'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object MAVOnline: TLineSeries
+      Title = 'MAV'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object ThresholdOnline: TLineSeries
+      Title = 'Threshold'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object LPOnline: TLineSeries
+      Title = 'LP'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object LNOnline: TLineSeries
+      Title = 'LN'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+  end
+  object Chart3: TChart
+    Left = 168
+    Top = 358
+    Width = 751
+    Height = 169
+    Legend.Visible = False
+    Title.Text.Strings = (
+      'R BINER FROM THRESHOLDING')
+    View3D = False
+    TabOrder = 2
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 18
+    object LineSeries3: TLineSeries
+      Title = 'Biner'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+  end
+  object OnlineButton: TButton
+    Left = 8
+    Top = 13
+    Width = 145
+    Height = 49
+    Caption = 'GO ONLINE'
+    TabOrder = 3
+  end
+  object ListBox1: TListBox
+    Left = 8
+    Top = 120
+    Width = 145
+    Height = 169
+    ItemHeight = 13
+    TabOrder = 4
+  end
+  object ListBox2: TListBox
+    Left = 8
+    Top = 358
+    Width = 145
+    Height = 169
+    ItemHeight = 13
+    TabOrder = 5
+  end
+  object rcountedit: TEdit
+    Left = 8
+    Top = 93
+    Width = 145
+    Height = 21
+    TabOrder = 6
+  end
+  object HeartBeatEdit: TEdit
+    Left = 8
+    Top = 331
+    Width = 145
+    Height = 21
+    TabOrder = 7
+  end
+end

@@ -1,0 +1,245 @@
+object Form1: TForm1
+  Left = 480
+  Height = 669
+  Top = 14
+  Width = 811
+  Caption = 'Form1'
+  ClientHeight = 669
+  ClientWidth = 811
+  Color = clWhite
+  LCLVersion = '1.8.2.0'
+  object Edit1: TEdit
+    Left = 79
+    Height = 23
+    Top = 54
+    Width = 41
+    TabOrder = 0
+  end
+  object Edit2: TEdit
+    Left = 128
+    Height = 23
+    Top = 54
+    Width = 40
+    TabOrder = 1
+  end
+  object Edit3: TEdit
+    Left = 176
+    Height = 23
+    Top = 54
+    Width = 40
+    TabOrder = 2
+  end
+  object Edit4: TEdit
+    Left = 79
+    Height = 23
+    Top = 88
+    Width = 41
+    TabOrder = 3
+  end
+  object Edit5: TEdit
+    Left = 128
+    Height = 23
+    Top = 88
+    Width = 40
+    TabOrder = 4
+  end
+  object Edit6: TEdit
+    Left = 176
+    Height = 23
+    Top = 88
+    Width = 40
+    TabOrder = 5
+  end
+  object Chart1: TChart
+    Left = 16
+    Height = 248
+    Top = 136
+    Width = 672
+    AxisList = <    
+      item
+        Marks.LabelBrush.Style = bsClear
+        Minors = <>
+        Title.LabelFont.Orientation = 900
+        Title.Visible = True
+        Title.Caption = 'X(n)'
+        Title.LabelBrush.Style = bsClear
+      end    
+      item
+        Alignment = calBottom
+        Marks.LabelBrush.Style = bsClear
+        Minors = <>
+        Title.Visible = True
+        Title.Caption = 'n'
+        Title.LabelBrush.Style = bsClear
+      end>
+    BackColor = clCream
+    Foot.Brush.Color = clBtnFace
+    Foot.Font.Color = clBlue
+    Title.Brush.Color = clBtnFace
+    Title.Font.Color = clBlue
+    Title.Text.Strings = (
+      'Input Sinus'
+    )
+    Title.Visible = True
+    Color = clHighlightText
+    object Chart1LineSeries1: TLineSeries
+      LinePen.Color = clHighlight
+    end
+  end
+  object Chart2: TChart
+    Left = 16
+    Height = 272
+    Top = 392
+    Width = 672
+    AxisList = <    
+      item
+        Marks.LabelBrush.Style = bsClear
+        Minors = <>
+        Title.LabelFont.Orientation = 900
+        Title.Visible = True
+        Title.Caption = 'X(n)'
+        Title.LabelBrush.Style = bsClear
+      end    
+      item
+        Alignment = calBottom
+        Marks.LabelBrush.Style = bsClear
+        Minors = <>
+        Title.Visible = True
+        Title.Caption = 'n'
+        Title.LabelBrush.Style = bsClear
+      end>
+    BackColor = clCream
+    Foot.Brush.Color = clBtnFace
+    Foot.Font.Color = clBlue
+    Legend.Alignment = laBottomCenter
+    Legend.ColumnCount = 3
+    Legend.Visible = True
+    Title.Brush.Color = clBtnFace
+    Title.Font.Color = clBlue
+    Title.Text.Strings = (
+      'Low Pass Filter'
+    )
+    Title.Visible = True
+    Color = clHighlightText
+    object Chart2LineSeries1: TLineSeries
+      Title = 'Orde 1'
+      LinePen.Color = clRed
+    end
+    object Chart2LineSeries2: TLineSeries
+      Title = 'Orde 2'
+      LinePen.Color = clPurple
+    end
+    object Chart2LineSeries3: TLineSeries
+      Title = 'Orde 3'
+      LinePen.Color = clFuchsia
+    end
+  end
+  object Edit7: TEdit
+    Left = 680
+    Height = 23
+    Top = 56
+    Width = 80
+    TabOrder = 8
+  end
+  object RadioButton1: TRadioButton
+    Left = 696
+    Height = 19
+    Top = 392
+    Width = 55
+    Caption = 'Orde 1'
+    OnChange = RadioButton1Change
+    TabOrder = 9
+  end
+  object RadioButton2: TRadioButton
+    Left = 696
+    Height = 19
+    Top = 416
+    Width = 55
+    Caption = 'Orde 2'
+    OnChange = RadioButton2Change
+    TabOrder = 10
+  end
+  object RadioButton3: TRadioButton
+    Left = 696
+    Height = 19
+    Top = 440
+    Width = 55
+    Caption = 'Orde 3'
+    OnChange = RadioButton3Change
+    TabOrder = 11
+  end
+  object Button1: TButton
+    Left = 696
+    Height = 25
+    Top = 136
+    Width = 75
+    Caption = 'Input'
+    OnClick = Button1Click
+    TabOrder = 12
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 15
+    Top = 62
+    Width = 57
+    Caption = 'Amplitudo'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 15
+    Top = 96
+    Width = 50
+    Caption = 'Frekuensi'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 80
+    Height = 15
+    Top = 32
+    Width = 37
+    Caption = 'Sinus 1'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 128
+    Height = 15
+    Top = 32
+    Width = 37
+    Caption = 'Sinus 2'
+    ParentColor = False
+  end
+  object Label5: TLabel
+    Left = 176
+    Height = 15
+    Top = 32
+    Width = 37
+    Caption = 'Sinus 3'
+    ParentColor = False
+  end
+  object Label6: TLabel
+    Left = 576
+    Height = 15
+    Top = 62
+    Width = 94
+    Caption = 'Frekuensi Cut-Off'
+    ParentColor = False
+  end
+  object Label7: TLabel
+    Left = 248
+    Height = 39
+    Top = 64
+    Width = 295
+    Caption = 'LOW PASS FILTER'
+    Color = clCream
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -27
+    Font.Name = 'Gill Sans Ultra Bold'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+    Transparent = False
+  end
+end

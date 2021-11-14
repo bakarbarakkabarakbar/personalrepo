@@ -1,0 +1,939 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'The Program'
+  ClientHeight = 667
+  ClientWidth = 1401
+  Color = clHighlightText
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label7: TLabel
+    Left = 447
+    Top = 5
+    Width = 696
+    Height = 42
+    Caption = 'WINDOW, DSP LIBRARY, AND QRS ANALYSIS'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -29
+    Font.Name = 'Trajan Pro 3'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label10: TLabel
+    Left = 1296
+    Top = 50
+    Width = 66
+    Height = 13
+    Caption = 'Threshold List'
+  end
+  object Chart1: TChart
+    Left = 19
+    Top = 51
+    Width = 790
+    Height = 189
+    BackWall.Pen.Visible = False
+    BottomWall.Brush.Gradient.EndColor = clSilver
+    BottomWall.Brush.Gradient.StartColor = clGray
+    BottomWall.Brush.Gradient.Visible = True
+    BottomWall.Pen.Color = clGray
+    BottomWall.Transparent = True
+    Gradient.Direction = gdFromTopLeft
+    Gradient.EndColor = clWhite
+    Gradient.StartColor = clSilver
+    LeftWall.Brush.Gradient.EndColor = clSilver
+    LeftWall.Brush.Gradient.StartColor = clGray
+    LeftWall.Brush.Gradient.Visible = True
+    LeftWall.Color = clWhite
+    LeftWall.Pen.Color = clGray
+    LeftWall.Transparent = True
+    Legend.CheckBoxes = True
+    Legend.Font.Height = -19
+    Legend.Font.Name = 'Roboto Th'
+    Legend.FontSeriesColor = True
+    Legend.Frame.Visible = False
+    Legend.HorizJustify = ljYes
+    Legend.HorizMargin = 18
+    Legend.LegendStyle = lsSeries
+    Legend.PositionUnits = muPercent
+    Legend.Shadow.Visible = False
+    Legend.Symbol.Pen.Visible = False
+    Legend.TopPercent = 70
+    Legend.TopPos = 35
+    MarginBottom = 2
+    MarginLeft = 1
+    MarginTop = 0
+    RightWall.Transparent = True
+    Title.Alignment = taLeftJustify
+    Title.Font.Color = clBlack
+    Title.Font.Height = -41
+    Title.Font.Name = 'Roboto Th'
+    Title.Font.Style = [fsBold]
+    Title.Font.Shadow.Color = clGray
+    Title.Font.Shadow.HorizSize = 1
+    Title.Font.Shadow.SmoothBlur = 2
+    Title.Font.Shadow.VertSize = 1
+    Title.Margins.Left = 9
+    Title.Margins.Top = 9
+    Title.Margins.Units = maPixels
+    Title.Text.Strings = (
+      'INPUT SIGNAL')
+    Title.VertMargin = 8
+    BottomAxis.Axis.Width = 0
+    BottomAxis.Axis.Visible = False
+    BottomAxis.Grid.Color = 14540253
+    BottomAxis.Grid.Visible = False
+    BottomAxis.LabelsFormat.Font.Color = clGray
+    BottomAxis.LabelsFormat.Font.Height = -24
+    BottomAxis.LabelsFormat.Font.Name = 'Roboto Th'
+    BottomAxis.MinorTicks.Visible = False
+    BottomAxis.Ticks.Color = -8355712
+    BottomAxis.TicksInner.Visible = False
+    BottomAxis.Title.Font.Height = -13
+    BottomAxis.Title.Font.Name = 'Roboto Th'
+    DepthAxis.Title.Font.Height = -13
+    DepthAxis.Title.Font.Name = 'Roboto Th'
+    DepthTopAxis.Title.Font.Height = -13
+    DepthTopAxis.Title.Font.Name = 'Roboto Th'
+    Frame.Visible = False
+    LeftAxis.Axis.Width = 0
+    LeftAxis.Axis.Visible = False
+    LeftAxis.Grid.Color = 14540253
+    LeftAxis.LabelsFormat.Font.Color = clGray
+    LeftAxis.LabelsFormat.Font.Height = -24
+    LeftAxis.LabelsFormat.Font.Name = 'Roboto Th'
+    LeftAxis.MinorTicks.Visible = False
+    LeftAxis.TickLength = 7
+    LeftAxis.Ticks.Color = -8355712
+    LeftAxis.TicksInner.Visible = False
+    LeftAxis.Title.Font.Height = -13
+    LeftAxis.Title.Font.Name = 'Roboto Th'
+    RightAxis.Axis.Width = 0
+    RightAxis.Grid.Visible = False
+    RightAxis.LabelsFormat.Font.Color = clGray
+    RightAxis.LabelsFormat.Font.Height = -31
+    RightAxis.LabelsFormat.Font.Name = 'Roboto Th'
+    RightAxis.MinorTicks.Visible = False
+    RightAxis.Ticks.Visible = False
+    RightAxis.Title.Font.Height = -13
+    RightAxis.Title.Font.Name = 'Roboto Th'
+    TopAxis.Title.Font.Height = -13
+    TopAxis.Title.Font.Name = 'Roboto Th'
+    View3D = False
+    View3DOptions.Elevation = 350
+    View3DOptions.Perspective = 55
+    BevelOuter = bvNone
+    BevelWidth = 2
+    Color = clWhite
+    TabOrder = 0
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = -2
+    ColorPalette = (
+      15054131
+      13395626
+      52377
+      3390463
+      4474111
+      13408512
+      13382553
+      39270
+      35071
+      204
+      15058056
+      14594511
+      65484
+      9563391
+      12303359)
+    object Series1: TLineSeries
+      Marks.Font.Height = -24
+      Marks.Font.Name = 'Roboto Th'
+      Marks.Transparent = True
+      Marks.Arrow.Visible = False
+      Marks.Callout.Arrow.Visible = False
+      Marks.Callout.ArrowHead = ahLine
+      Marks.Callout.Distance = 8
+      Marks.Callout.Length = 0
+      SeriesColor = 6724095
+      Title = 'ECG Input'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object WindowChart: TLineSeries
+      Title = 'Window'
+      Brush.BackColor = clDefault
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+    object RpeakChart: TPointSeries
+      Title = 'R Peak'
+      ClickableLine = False
+      Pointer.HorizSize = 8
+      Pointer.InflateMargins = True
+      Pointer.Style = psCircle
+      Pointer.VertSize = 8
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
+  end
+  object Button1: TButton
+    Left = 815
+    Top = 51
+    Width = 92
+    Height = 42
+    Caption = 'SET/IMPORT'
+    TabOrder = 1
+    OnClick = Button1Click
+  end
+  object ListBox1: TListBox
+    Left = 1272
+    Top = 69
+    Width = 121
+    Height = 171
+    ItemHeight = 13
+    TabOrder = 2
+  end
+  object GroupBox1: TGroupBox
+    Left = 19
+    Top = 246
+    Width = 790
+    Height = 409
+    Caption = 'QRS Detector'
+    TabOrder = 3
+    object Chart2: TChart
+      Left = 22
+      Top = 23
+      Width = 768
+      Height = 183
+      Legend.CheckBoxes = True
+      Legend.Font.Color = 4210752
+      Legend.Font.Height = -13
+      Legend.Font.Name = 'Verdana'
+      Legend.Frame.Visible = False
+      Legend.LegendStyle = lsSeries
+      Legend.Transparent = True
+      Title.Font.Color = clGray
+      Title.Font.Height = -16
+      Title.Text.Strings = (
+        'FILTERING PROCESS')
+      BottomAxis.Grid.Visible = False
+      BottomAxis.LabelsFormat.Font.Color = clGray
+      BottomAxis.LabelsFormat.Font.Height = -13
+      BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+      BottomAxis.MinorTicks.Visible = False
+      BottomAxis.Title.Font.Color = 4210752
+      BottomAxis.Title.Font.Height = -15
+      DepthAxis.LabelsFormat.Font.Color = clGray
+      DepthAxis.LabelsFormat.Font.Height = -13
+      DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+      DepthAxis.MinorTicks.Visible = False
+      DepthAxis.Title.Font.Color = 4210752
+      DepthAxis.Title.Font.Height = -15
+      DepthTopAxis.LabelsFormat.Font.Color = clGray
+      DepthTopAxis.LabelsFormat.Font.Height = -13
+      DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+      DepthTopAxis.MinorTicks.Visible = False
+      DepthTopAxis.Title.Font.Color = 4210752
+      DepthTopAxis.Title.Font.Height = -15
+      LeftAxis.Axis.Visible = False
+      LeftAxis.LabelsFormat.Font.Color = clGray
+      LeftAxis.LabelsFormat.Font.Height = -13
+      LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+      LeftAxis.MinorTicks.Visible = False
+      LeftAxis.Title.Font.Color = 4210752
+      LeftAxis.Title.Font.Height = -15
+      RightAxis.LabelsFormat.Font.Color = clGray
+      RightAxis.LabelsFormat.Font.Height = -13
+      RightAxis.LabelsFormat.Font.Name = 'Verdana'
+      RightAxis.MinorTicks.Visible = False
+      RightAxis.Title.Font.Color = 4210752
+      RightAxis.Title.Font.Height = -15
+      TopAxis.LabelsFormat.Font.Color = clGray
+      TopAxis.LabelsFormat.Font.Height = -13
+      TopAxis.LabelsFormat.Font.Name = 'Verdana'
+      TopAxis.MinorTicks.Visible = False
+      TopAxis.Title.Font.Color = 4210752
+      TopAxis.Title.Font.Height = -15
+      View3D = False
+      View3DWalls = False
+      Color = clWhite
+      TabOrder = 0
+      DefaultCanvas = 'TGDIPlusCanvas'
+      object LPFOfflineChart: TLineSeries
+        Marks.Brush.Color = 9875024
+        Marks.Font.Name = 'Verdana'
+        Marks.RoundSize = 0
+        Marks.Shadow.Visible = False
+        Title = 'LPF'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object HPFOfflineChart: TLineSeries
+        Marks.Brush.Color = 6868991
+        Marks.Font.Name = 'Verdana'
+        Marks.RoundSize = 0
+        Marks.Shadow.Visible = False
+        Title = 'HPF'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object DerivativeOfflineChart: TLineSeries
+        Marks.Brush.Color = 4685823
+        Marks.Font.Name = 'Verdana'
+        Marks.RoundSize = 0
+        Marks.Shadow.Visible = False
+        Title = 'Derivative'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object SqrOfflineChart: TLineSeries
+        Marks.Brush.Color = 14404225
+        Marks.Font.Name = 'Verdana'
+        Marks.RoundSize = 0
+        Marks.Shadow.Visible = False
+        Title = 'Squaring'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object MAVOfflineChart: TLineSeries
+        Marks.Brush.Color = 10384222
+        Marks.Font.Name = 'Verdana'
+        Marks.RoundSize = 0
+        Marks.Shadow.Visible = False
+        Title = 'MAV'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object ThOfflineChart: TLineSeries
+        Title = 'TH'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object LPOfflineChart: TLineSeries
+        Title = 'LP'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object LNOfflineChart: TLineSeries
+        Title = 'LN'
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+    end
+    object Chart3: TChart
+      Left = 19
+      Top = 212
+      Width = 614
+      Height = 184
+      Legend.CheckBoxes = True
+      Legend.Font.Color = 4210752
+      Legend.Font.Height = -13
+      Legend.Font.Name = 'Verdana'
+      Legend.Frame.Visible = False
+      Legend.LegendStyle = lsSeries
+      Legend.Transparent = True
+      Legend.Visible = False
+      Title.Font.Color = clGray
+      Title.Font.Height = -16
+      Title.Margins.Left = 11
+      Title.Margins.Top = 9
+      Title.Margins.Units = maPixels
+      Title.Text.Strings = (
+        'BINER RESULT USING THRESHOLD')
+      BottomAxis.Grid.Visible = False
+      BottomAxis.LabelsFormat.Font.Color = clGray
+      BottomAxis.LabelsFormat.Font.Height = -13
+      BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+      BottomAxis.MinorTicks.Visible = False
+      BottomAxis.Title.Font.Color = 4210752
+      BottomAxis.Title.Font.Height = -15
+      DepthAxis.LabelsFormat.Font.Color = clGray
+      DepthAxis.LabelsFormat.Font.Height = -13
+      DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+      DepthAxis.MinorTicks.Visible = False
+      DepthAxis.Title.Font.Color = 4210752
+      DepthAxis.Title.Font.Height = -15
+      DepthTopAxis.LabelsFormat.Font.Color = clGray
+      DepthTopAxis.LabelsFormat.Font.Height = -13
+      DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+      DepthTopAxis.MinorTicks.Visible = False
+      DepthTopAxis.Title.Font.Color = 4210752
+      DepthTopAxis.Title.Font.Height = -15
+      LeftAxis.Axis.Visible = False
+      LeftAxis.LabelsFormat.Font.Color = clGray
+      LeftAxis.LabelsFormat.Font.Height = -13
+      LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+      LeftAxis.MinorTicks.Visible = False
+      LeftAxis.Title.Font.Color = 4210752
+      LeftAxis.Title.Font.Height = -15
+      RightAxis.LabelsFormat.Font.Color = clGray
+      RightAxis.LabelsFormat.Font.Height = -13
+      RightAxis.LabelsFormat.Font.Name = 'Verdana'
+      RightAxis.MinorTicks.Visible = False
+      RightAxis.Title.Font.Color = 4210752
+      RightAxis.Title.Font.Height = -15
+      TopAxis.LabelsFormat.Font.Color = clGray
+      TopAxis.LabelsFormat.Font.Height = -13
+      TopAxis.LabelsFormat.Font.Name = 'Verdana'
+      TopAxis.MinorTicks.Visible = False
+      TopAxis.Title.Font.Color = 4210752
+      TopAxis.Title.Font.Height = -15
+      View3D = False
+      View3DWalls = False
+      Color = clWhite
+      TabOrder = 1
+      DefaultCanvas = 'TGDIPlusCanvas'
+      object Series7: TLineSeries
+        Marks.Brush.Color = 6868991
+        Marks.Font.Name = 'Verdana'
+        Marks.RoundSize = 0
+        Marks.Shadow.Visible = False
+        SeriesColor = 16512
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+    end
+    object FFedit: TLabeledEdit
+      Left = 652
+      Top = 254
+      Width = 121
+      Height = 21
+      EditLabel.Width = 84
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Forgetting Factor'
+      TabOrder = 2
+      Text = '0.4'
+    end
+    object OrdeMAVEdit: TLabeledEdit
+      Left = 652
+      Top = 299
+      Width = 121
+      Height = 21
+      EditLabel.Width = 75
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Orde MAV Filter'
+      TabOrder = 3
+      Text = '35'
+    end
+    object ErrorEdit: TLabeledEdit
+      Left = 652
+      Top = 343
+      Width = 121
+      Height = 21
+      EditLabel.Width = 61
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Error Manual'
+      TabOrder = 4
+      Text = '35'
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 815
+    Top = 246
+    Width = 578
+    Height = 409
+    Caption = 'Windowing + Fourier Analysis'
+    TabOrder = 4
+    object Chart4: TChart
+      Left = 10
+      Top = 23
+      Width = 555
+      Height = 183
+      BackWall.Pen.Visible = False
+      BottomWall.Pen.Visible = False
+      BottomWall.Size = 4
+      Foot.Font.Color = clBlue
+      LeftWall.Pen.Visible = False
+      LeftWall.Size = 4
+      Legend.Frame.Color = clGray
+      Legend.Frame.Visible = False
+      Legend.Shadow.Color = 13421772
+      Legend.Shadow.Transparency = 0
+      Legend.Transparent = True
+      Legend.Visible = False
+      Title.Alignment = taLeftJustify
+      Title.Color = clInfoBk
+      Title.Font.Color = clBlack
+      Title.Font.Height = -13
+      Title.Frame.Color = clGray
+      Title.Shadow.HorizSize = 0
+      Title.Shadow.VertSize = 0
+      Title.Text.Strings = (
+        'SPECTRUM FREQUENCY')
+      Title.Transparent = False
+      BottomAxis.Axis.Color = 4210752
+      BottomAxis.Grid.Color = 13421772
+      BottomAxis.Grid.Visible = False
+      DepthAxis.Grid.Color = clGray
+      DepthTopAxis.Grid.Color = clGray
+      Frame.Visible = False
+      LeftAxis.Axis.Color = 4210752
+      LeftAxis.Grid.Color = clGray
+      LeftAxis.Grid.Visible = False
+      RightAxis.Grid.Color = clGray
+      TopAxis.Grid.Color = clGray
+      View3D = False
+      Color = clWhite
+      TabOrder = 0
+      DefaultCanvas = 'TGDIPlusCanvas'
+      ColorPaletteIndex = -2
+      ColorPalette = (
+        16685954
+        2413052
+        900220
+        3114493
+        16580349
+        2182882
+        14039081
+        38071
+        34394
+        18130
+        16442835
+        14211288
+        8089951)
+      object Series8: TBarSeries
+        BarPen.Visible = False
+        Marks.Frame.Color = clGray
+        Marks.Shadow.Color = 13421772
+        Marks.Shadow.HorizSize = 2
+        Marks.Shadow.VertSize = 2
+        Marks.Visible = False
+        SeriesColor = clNavy
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Bar'
+        YValues.Order = loNone
+      end
+      object GridBandTool1: TGridBandTool
+        Tag = 10061943
+        Band1.Color = 15329769
+        AxisID = 2
+      end
+    end
+    object Chart5: TChart
+      Left = 10
+      Top = 212
+      Width = 555
+      Height = 184
+      BackWall.Pen.Visible = False
+      BottomWall.Pen.Visible = False
+      BottomWall.Size = 4
+      Foot.Font.Color = clBlue
+      LeftWall.Pen.Visible = False
+      LeftWall.Size = 4
+      Legend.Frame.Color = clGray
+      Legend.Frame.Visible = False
+      Legend.Shadow.Color = 13421772
+      Legend.Shadow.Transparency = 0
+      Legend.Transparent = True
+      Legend.Visible = False
+      Title.Alignment = taLeftJustify
+      Title.Color = clInfoBk
+      Title.Font.Color = clBlack
+      Title.Font.Height = -13
+      Title.Frame.Color = clGray
+      Title.Shadow.HorizSize = 0
+      Title.Shadow.VertSize = 0
+      Title.Text.Strings = (
+        'INVERSE FOURIER TRANSFORM')
+      Title.Transparent = False
+      BottomAxis.Axis.Color = 4210752
+      BottomAxis.Grid.Color = 13421772
+      BottomAxis.Grid.Visible = False
+      DepthAxis.Grid.Color = clGray
+      DepthTopAxis.Grid.Color = clGray
+      Frame.Visible = False
+      LeftAxis.Axis.Color = 4210752
+      LeftAxis.Grid.Color = clGray
+      LeftAxis.Grid.Visible = False
+      RightAxis.Grid.Color = clGray
+      TopAxis.Grid.Color = clGray
+      View3D = False
+      Color = clWhite
+      TabOrder = 1
+      DefaultCanvas = 'TGDIPlusCanvas'
+      ColorPaletteIndex = -2
+      ColorPalette = (
+        16685954
+        2413052
+        900220
+        3114493
+        16580349
+        2182882
+        14039081
+        38071
+        34394
+        18130
+        16442835
+        14211288
+        8089951)
+      object LineSeries1: TLineSeries
+        Marks.Frame.Color = clGray
+        Marks.Shadow.Color = 13421772
+        Marks.Shadow.HorizSize = 2
+        Marks.Shadow.VertSize = 2
+        SeriesColor = clBlack
+        Brush.BackColor = clDefault
+        Pointer.InflateMargins = True
+        Pointer.Style = psRectangle
+        XValues.Name = 'X'
+        XValues.Order = loAscending
+        YValues.Name = 'Y'
+        YValues.Order = loNone
+      end
+      object GridBandTool2: TGridBandTool
+        Tag = 10061943
+        Band1.Color = 15329769
+        AxisID = 2
+      end
+    end
+  end
+  object GroupBox3: TGroupBox
+    Left = 815
+    Top = 101
+    Width = 154
+    Height = 81
+    Caption = 'Signal Test : Sinus'
+    TabOrder = 5
+    object Label1: TLabel
+      Left = 10
+      Top = 23
+      Width = 14
+      Height = 13
+      Caption = 'A :'
+    end
+    object Label2: TLabel
+      Left = 78
+      Top = 23
+      Width = 13
+      Height = 13
+      Caption = 'F :'
+    end
+    object Label3: TLabel
+      Left = 10
+      Top = 51
+      Width = 14
+      Height = 13
+      Caption = 'N :'
+    end
+    object Label4: TLabel
+      Left = 77
+      Top = 51
+      Width = 19
+      Height = 13
+      Caption = 'FS :'
+    end
+    object Edit1: TEdit
+      Left = 29
+      Top = 20
+      Width = 42
+      Height = 21
+      TabOrder = 0
+      Text = '2'
+    end
+    object Edit2: TEdit
+      Left = 97
+      Top = 20
+      Width = 39
+      Height = 21
+      TabOrder = 1
+      Text = '30'
+    end
+    object Edit3: TEdit
+      Left = 29
+      Top = 48
+      Width = 42
+      Height = 21
+      TabOrder = 2
+      Text = '100'
+    end
+    object Edit4: TEdit
+      Left = 97
+      Top = 48
+      Width = 39
+      Height = 21
+      TabOrder = 3
+      Text = '500'
+    end
+  end
+  object GroupBox5: TGroupBox
+    Left = 975
+    Top = 101
+    Width = 66
+    Height = 81
+    Caption = 'FT'
+    TabOrder = 6
+    object DFTRB: TRadioButton
+      Left = 17
+      Top = 21
+      Width = 78
+      Height = 18
+      Caption = 'DFT'
+      TabOrder = 0
+    end
+    object FFTRB: TRadioButton
+      Left = 17
+      Top = 50
+      Width = 77
+      Height = 17
+      Caption = 'FFT'
+      TabOrder = 1
+    end
+  end
+  object GroupBox6: TGroupBox
+    Left = 1047
+    Top = 99
+    Width = 120
+    Height = 83
+    Caption = 'Type of Window'
+    TabOrder = 7
+    object NoWindowRB: TRadioButton
+      Left = 19
+      Top = 18
+      Width = 77
+      Height = 17
+      Caption = 'No Window'
+      TabOrder = 0
+    end
+    object HanningRB: TRadioButton
+      Left = 19
+      Top = 36
+      Width = 77
+      Height = 17
+      Caption = 'Hanning'
+      TabOrder = 1
+    end
+    object HammingRB: TRadioButton
+      Left = 19
+      Top = 55
+      Width = 77
+      Height = 17
+      Caption = 'Hamming'
+      TabOrder = 2
+    end
+  end
+  object GroupBox7: TGroupBox
+    Left = 913
+    Top = 51
+    Width = 104
+    Height = 42
+    Caption = 'Input Source'
+    TabOrder = 8
+    object ManualRB: TRadioButton
+      Left = 9
+      Top = 16
+      Width = 45
+      Height = 17
+      Caption = 'Sinus'
+      TabOrder = 0
+    end
+    object FileRB: TRadioButton
+      Left = 56
+      Top = 16
+      Width = 38
+      Height = 17
+      Caption = 'File'
+      TabOrder = 1
+    end
+  end
+  object Detection: TGroupBox
+    Left = 1173
+    Top = 53
+    Width = 89
+    Height = 129
+    Caption = 'Detector'
+    TabOrder = 9
+    object Label8: TLabel
+      Left = 8
+      Top = 46
+      Width = 30
+      Height = 13
+      Caption = 'BPM  :'
+    end
+    object Label9: TLabel
+      Left = 8
+      Top = 20
+      Width = 29
+      Height = 13
+      Caption = 'R      :'
+    end
+    object Button2: TButton
+      Left = 8
+      Top = 98
+      Width = 75
+      Height = 25
+      Caption = 'QRS'
+      TabOrder = 0
+      OnClick = Button2Click
+    end
+    object Button5: TButton
+      Left = 8
+      Top = 68
+      Width = 75
+      Height = 27
+      Caption = 'Heart Rate'
+      TabOrder = 1
+      OnClick = Button5Click
+    end
+    object Edit5: TEdit
+      Left = 41
+      Top = 17
+      Width = 42
+      Height = 21
+      TabOrder = 2
+    end
+    object Edit6: TEdit
+      Left = 41
+      Top = 43
+      Width = 42
+      Height = 21
+      TabOrder = 3
+    end
+  end
+  object GroupBox9: TGroupBox
+    Left = 815
+    Top = 182
+    Width = 447
+    Height = 58
+    TabOrder = 10
+    object Label5: TLabel
+      Left = 10
+      Top = 32
+      Width = 36
+      Height = 13
+      Caption = 'Shifting'
+    end
+    object Label6: TLabel
+      Left = 10
+      Top = 11
+      Width = 33
+      Height = 13
+      Caption = 'Scaling'
+    end
+    object ScrollBar1: TScrollBar
+      Left = 72
+      Top = 9
+      Width = 279
+      Height = 17
+      Max = 1000
+      Min = 1
+      PageSize = 0
+      Position = 1
+      TabOrder = 0
+      OnChange = ScrollBar1Change
+    end
+    object ScrollBar2: TScrollBar
+      Left = 72
+      Top = 30
+      Width = 279
+      Height = 17
+      Max = 1800
+      Min = 1
+      PageSize = 0
+      Position = 1
+      TabOrder = 1
+      OnChange = ScrollBar2Change
+    end
+    object Button3: TButton
+      Left = 366
+      Top = 5
+      Width = 75
+      Height = 23
+      Caption = 'SPECTRUM'
+      TabOrder = 2
+      OnClick = Button3Click
+    end
+    object Button4: TButton
+      Left = 366
+      Top = 27
+      Width = 75
+      Height = 21
+      Caption = 'INVERSE'
+      TabOrder = 3
+      OnClick = Button4Click
+    end
+  end
+  object Button6: TButton
+    Left = 1023
+    Top = 53
+    Width = 74
+    Height = 40
+    Caption = 'Compare IIR'
+    TabOrder = 11
+    OnClick = Button6Click
+  end
+  object Button7: TButton
+    Left = 1100
+    Top = 53
+    Width = 67
+    Height = 40
+    Caption = 'Online'
+    TabOrder = 12
+    OnClick = Button7Click
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 20
+    Top = 10
+  end
+end

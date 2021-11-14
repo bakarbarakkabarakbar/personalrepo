@@ -1,0 +1,201 @@
+unit Unit3;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VclTee.TeeGDIPlus, Vcl.StdCtrls,
+  VCLTee.TeEngine, VCLTee.Series, Vcl.ExtCtrls, VCLTee.TeeProcs, math, dspinterface,
+  VCLTee.Chart;
+
+type
+  arraybaru = array[-9999..9999] of real;
+  TForm3 = class(TForm)
+    Chart1: TChart;
+    ECGOnline: TLineSeries;
+    Chart2: TChart;
+    BPFonline: TLineSeries;
+    DerivativeOnline: TLineSeries;
+    Chart3: TChart;
+    BinerOnline: TLineSeries;
+    OnlineButton: TButton;
+    ListBox1: TListBox;
+    rcountedit: TEdit;
+    Label1: TLabel;
+    SquaringOnline: TLineSeries;
+    MAVOnline: TLineSeries;
+    ThresholdOnline: TLineSeries;
+    LPOnline: TLineSeries;
+    LNOnline: TLineSeries;
+    Label3: TLabel;
+    PeakOnline: TPointSeries;
+    Label2: TLabel;
+    HeartBeatEdit: TEdit;
+    ListBox2: TListBox;
+    procedure OnlineButtonClick(Sender: TObject);
+    procedure delay(lama:longint);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+  i,j,k : integer;
+  yy, xx, ybackward, yforward : arraybaru;
+  rr, tetaa : extended;
+  bpm1, bpm2, bpmfix, outp : arraybaru;
+  lp, ln, th : vektor;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit1, Unit2;
+
+procedure TForm3.delay(lama:longint);
+var
+  ref : longint;
+begin
+  ref:=gettickcount;
+  repeat application.processmessages;
+  until ((gettickcount-ref)>=lama);
+end;
+
+procedure TForm3.FormCreate(Sender: TObject);
+begin
+  heartbeatedit.Visible := False;
+  Listbox2.Visible := false;
+  label2.Visible := false;
+end;
+
+procedure TForm3.OnlineButtonClick(Sender: TObject);
+var
+  temp, rpeak : extended;
+begin
+  ecgonline.Clear;
+  peakonline.Clear;
+  bpfonline.Clear;
+  derivativeonline.Clear;
+  squaringonline.Clear;
+  MAVonline.Clear;
+  ThresholdOnline.Clear;
+  LPOnline.Clear;
+  LNOnline.Clear;
+  BinerOnline.Clear;
+  Listbox1.Clear;
+  ListBox2.Clear;
+  rcountedit.Clear;
+  heartbeatedit.Clear;
+
+  for i := 0 to 5000 do
+  begin
+    form1.outsqr[i] := 0;
+    form1.outddt[i]:= 0;
+
+    yforward[i]:= 0;
+    ybackward[i]:= 0;
+    outp[i]:= 0;
+  end;
+
+  for i := 0 downto -5000 do
+  begin
+  form1.outsqr[i]:= 0;
+  form1.outddt[i]:= 0;
+
+  yforward[i]:= 0;
+  ybackward[i]:= 0;
+  outp[i]:= 0;
+  end;
+
+   listbox1.Items.Add('  Threshold  ');
+   listbox2.Items.Add('----R R Interval----');
+   if onlinebutton.Caption='Online' then begin
+    onlinebutton.Caption:='Stop';
+    i:= 0;
+    k:= 0;
+    repeat
+     label3.Caption:= 'Iterasi : '+ inttostr(i);
+     ecgonline.AddXY(i, form1.xecgfilter[i]);
+     bpfonline.AddXY(i, form2.y[i]);
+     form1.outddt[i]:= ((2*form2.y[i]) + form2.y[i-1]- form2.y[i-3]-(2*form2.y[i-4]))/8;
+     derivativeonline.AddXY(i, form1.outddt[i]);
+     form1.outsqr[i]:= sqr(form1.outddt[i]);
+     squaringonline.AddXY(i, form1.outsqr[i]);
+     ordemav:=32;
+     temp:= 0;
+     j:= 0;
+       repeat
+          temp:= temp + form1.outsqr[i-j];
+          inc(j)
+       until (j= ordemav-1);
+     ybackward[i]:= (1/ordemav)*temp;
+     temp:= 0;
+     j:= 0;
+       repeat
+         temp:= temp +ybackward[i+j];
+         inc(j);
+       until (j= ordemav-1);
+     yforward[i]:= (1/ordemav)*temp;
+     mavonline.AddXY(i, yforward[i]);
+     max:= yforward[0];
+     if yforward[i]>= max then max:= yforward[i];
+
+
+      lp[i]:= 0.98*lp[i-1]+(1-0.98)*max;
+      lponline.AddXY(i, lp[i]);
+      ln[i]:= 0.98*ln[i-1]+(1-0.98)*0.015;
+      lnonline.AddXY(i, ln[i]);
+      th[i]:= ln[i] + (0.4*(lp[i]-ln[i]));
+      thresholdonline.AddXY(i, th[i]);
+      listbox1.Items.Add('th['+inttostr(i)+']='+floattostr(th[i]));
+
+      if yforward[i]> th[i] then
+      begin
+      outp[i]:= 1;
+      inc(k);
+      end
+      else outp[i]:= 0;
+      if (outp[i-1]=1) AND (outp[i] = 0) then
+      begin
+        peakonline.AddXY(i-32,form1.xecgfilter[i-32]);
+      end;
+      bineronline.AddXY(i,outp[i]);
+
+      k := 0;
+
+      if (i>70) and (form1.outp[i]=1) and (form1.outp[i-1]=0) then begin
+          bpm1[k]:=i;
+          inc(k);
+          j:=i-1;
+          repeat
+            if (form1.outp[j]=1) and (form1.outp[j-1]=0) then begin
+              bpm2[k]:=j;
+            end;
+            j:=j-1;
+          until (j=i-350);
+      end;
+
+       j:=0;
+
+      if (i>form1.jmldataecg-1) then begin         //200 biar ketemu 2 peak dulu
+          bpmfix[j]:=60/((bpm1[j]-bpm2[j+1])/form1.fsecg);
+          listbox2.items.Add('RtoR['+inttostr(j)+']= '+floattostr(bpmfix[j]));
+          bpm:=bpmfix[j];
+          inc(j);
+      end;
+
+      heartbeatedit.Text:= floattostr(round(bpm));
+      i:=i+1;
+      delay(5);
+    until (onlinebutton.Caption='Online') or (i=form1.jmldataecg-1);
+   end
+
+    else if onlinebutton.Caption='Stop' then begin
+    onlinebutton.Caption:='Online';
+   end;
+end;
+
+end.
