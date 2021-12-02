@@ -1,0 +1,939 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, opengl,
+  ExtCtrls, StdCtrls, TeEngine, Series, TeeProcs, Chart, Spin, VclTee.TeeGDIPlus, Math;
+
+type
+  TForm1 = class(TForm)
+    Timer1: TTimer;
+    Timer2: TTimer;
+    close1: TButton;
+    Button1: TButton;
+    RadioButton1: TRadioButton;
+    Button4: TButton;
+    GroupBox1: TGroupBox;
+    SpinEdit1: TSpinEdit;
+    SpinEdit3: TSpinEdit;
+    SpinEdit2: TSpinEdit;
+    Label4: TLabel;
+    Label1: TLabel;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    Label2: TLabel;
+    Label3: TLabel;
+    SpinEdit4: TSpinEdit;
+    SpinEdit5: TSpinEdit;
+    SpinEdit6: TSpinEdit;
+    Button2: TButton;
+    Chart1: TChart;
+    Chart2: TChart;
+    Series1: TLineSeries;
+    Series2: TLineSeries;
+    Chart3: TChart;
+    Series3: TLineSeries;
+    Chart4: TChart;
+    Series4: TLineSeries;
+    Chart5: TChart;
+    Series5: TLineSeries;
+    Chart6: TChart;
+    Series6: TLineSeries;
+    Chart7: TChart;
+    Series7: TLineSeries;
+    Chart8: TChart;
+    Series8: TLineSeries;
+    Chart9: TChart;
+    Series9: TLineSeries;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure Timer2Timer(Sender: TObject);
+    procedure close1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure SpinEdit1Change(Sender: TObject);
+    procedure SpinEdit2Change(Sender: TObject);
+    procedure SpinEdit3Change(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure motion;
+    procedure Button2Click(Sender: TObject);
+
+  private
+    { Private-Deklarationen }
+   myDC : HDC;
+   myRC : HGLRC;
+   myPalette : HPALETTE;
+   procedure SetupPixelFormat;
+  public
+    { Public-Deklarationen }
+  end;
+
+const
+  mat_specular : array [0..3] of GLfloat = ( 8.0, 8.0, 1.0, 0.0 );
+  mat_shininess : GLfloat = 40.0;
+  light_position : array [0..3] of GLfloat = ( 120.6, 14.0, 41.0, 10.7 );
+
+  f0=1.0;
+  f1=0.5;
+  f2=0.5;
+  f3=0.5;
+
+  mf=0.7;
+  lf=2.25{1.25};
+  masf=1.5;
+
+  gamma1=-15*pi/180;
+  gamma2=25*pi/180;
+
+  pi=3.14;
+  max=3;
+  dt=0.0001;
+
+  {gravitational acceleration}
+  g1=9.81;
+
+  {segments masses}
+  m1= masf*6.86{9.74};
+  m2= masf*2.76{3.86};
+  m3= masf*0.89{0.99};
+
+  {moments of inertia}
+  I1= 0.133{0.167};
+  I2= 0.048{0.060};
+  I3= 0.004{0.005};
+
+  {segments length}
+  l1= lf*0.383{0.40};
+  l2= lf*0.407{0.43};
+  l3= lf*0.149;
+
+  {cm}
+  a1= lf*0.42*l1{0.2};
+  a2= lf*0.41*l2{0.15};
+  a3= lf*0.4*l3{0.08};
+
+  {passive damping}
+  cpd1= 3.09;
+  cpd2= 10{3.17;};
+  cpd3= 0.943;
+
+  {joint stifness}
+
+  k11=2.6;
+  k21=5.8;
+  k31=8.7;
+  k41=1.3;
+
+  k12=6.1;
+  k22=5.9;
+  k32=10.5;
+  k42=21.8;
+
+  k13=2;
+  k23=5;
+  k33=2;
+  k43=5;
+
+  tf = 0.6;     //fall time
+  tr = 0.4;     //rise time
+  vmax1 = 0.45; //max contraction velocity
+  vmax2 = 3;
+  vmax3 = 0.2;
+  vmax4 = 0.2;
+  vmax5 = 0.4;
+  vmax6 = 0.4;
+  cm = 2.5;     //shape parameter of F-V
+
+  lopt1 = 0.29; //optimum length of BFSH
+  lopt2 = 0.48; //optimum length of rectus femoris
+  fmax1 = 1000; //max isometric force
+  fmax2 = 930;
+  rf1 = 0.049;  //moment arm of BFSH and BFLH
+  rf2 = 0.025;  //moment arm of rectus femoris
+  kdamp1 = 200; //CPD of BFSH
+  kstf1 = 4.10; //kpe of BFLH
+  kdamp2 = 300; //CPD of rectus femoris
+  kstf2 = 5.40; //kpe of rectus femoris
+
+  lopt3 = 0.56; //gastroc med
+  lopt4 = 0.3;  //tibialis anterior
+  fmax3 = 1150;
+  fmax4 = 1650;
+  rf3 = 0.040;
+  rf4 = 0.023;
+  kdamp3 = 275;
+  kstf3 = 8.25;
+  kdamp4 = 200;
+  kstf4 = 1.30;
+
+  lopt5 = 275; //biopsoas
+  lopt6 = 275;  //BFLH
+  fmax5 = 1100;
+  fmax6 = 2750;
+  rf5 = 0.132;
+  rf6 = 0.054;
+  kdamp5 = 275;
+  kstf5 = 5.85;
+  kdamp6 = 275;
+  kstf6 = 4.10;
+
+type
+  row   =array[1..max] of real;
+  matrix=array[1..max] of row;
+
+var
+  Form1: TForm1;
+  rotangle,rotangle1,rotangle2,rotangle3:real;
+  xpos,ypos,zpos:real;
+  circlepoint:integer;
+  yaw,pitch,roll : integer;
+  hip_angle,knee_angle,ankle_angle : real;
+  time,theta, phi,phidot,thetadot : extended;
+  Sphere,cylinder,disk,partialdisk: GLUquadricObj;
+  a, b, ab                                :matrix;
+  inversionOK                             :boolean;
+  b1, ab1                                 :row;
+  m, c, g                                 :matrix;
+  t                                       :real;
+  angle, vel, accl, gra, torque, anglebef, angle_sblm, psf    :row;
+  hip, knee, ankle                       :array[1..1000000] of real;
+  theta1, theta2, theta3                  :real;
+  thetadot1, thetadot2, thetadot3         :real;
+  thetadotdot1, thetadotdot2, thetadotdot3:real;
+  filename                                :text;
+  term1, term2, term3                     :row;
+  mpd1, mpd2, mpd3, mpd4, mpd5, mpd6, mpe1, mpe2, mpe3, mpe4, mpe5, mpe6  :extended;
+  k1, k2, k3, k4                          :array[1..max] of extended;
+  counter                                 :integer;
+  time1, hip1, knee1, ankle1              :array[1..1000000] of extended;
+  //Ftot1, Ftot2, Ftot3, Ftot4, Ftot5, Ftot6:real;
+  au1,au2,au3,au4,au5,au6,audot1,audot2,audot3,audot4,audot5,audot6,u1,u2,u3,u4,u5,u6 :real;
+  s1,s2,s3,s4,s5,s6,mus1,mus2,mus3,mus4,mus5,mus6,tetseb1,tetseb2,tetseb3             :extended;
+  lt1,lc1,lc2,lc3,lc4,lc5,lc6,lt2,lt3,lt4,lt5,lt6,fl1,fl2,fl3,fl4,fl5,fl6,fv1,fv2,fv3,fv4,fv5,fv6:real;
+  lm1,lm2,lm3,lm4,lm5,lm6                  :extended;
+  adot1,adot2,adot3,adot4,adot5,adot6,act1,act2,act3,act4,act5,act6,
+  flr1,flr2,fvr1,fvr2,flr3,flr4,fvr3,fvr4,flr5,flr6,fvr5,fvr6,
+  v1,v2,ftot1,ftot2,v3,v4,ftot3,ftot4,v5,v6,ftot5,ftot6,
+  m_otot1,m_otot2,m_otot3,m_otot4,m_otot5,m_otot6  : extended;
+
+  m_pasif                   : row;
+  k1p, k2p, k3p, k4p        : row;
+  cp                        : row ;
+  phi1, phi2                : row;
+  x                         : array[1..3] of real;
+implementation
+
+{$R *.DFM}
+
+procedure matrixmultiplication (a,b:matrix;n:integer);
+var
+  i,j,k:integer;
+  temp:real;
+begin
+
+  for i:= 1 to max do
+  begin
+    for j:= 1 to n do
+    begin
+    temp:=0;
+      for k:= 1 to max do
+      begin
+        temp:=temp+a[i,k]*b[k,j];
+      end;
+    ab[i,j]:=temp;
+    end;
+  end;
+end;
+
+procedure matrixmultiplication1(a:matrix;b:row;n:integer);
+var
+  i,j:integer;
+  temp:real;
+begin
+  for i:= 1 to max do
+  begin
+    temp:=0;
+    for j:= 1 to max do
+    begin
+      temp:=temp+a[i,j]*b[j];
+    end;
+    ab1[i]:=temp;
+  end;
+end;
+
+Procedure MatrixInversion(A:Matrix; N:integer);
+Var
+  I, J, K : integer;
+  Factor  : real;
+  Temp    : Row;
+
+Begin
+  InversionOK:=False;
+  For I:=1 to N do
+    For J:=1 to N do
+      If I=J then
+        B [I,J]:=1
+      else
+        B [I,J]:=0;
+      For I:=1 to N do
+      Begin
+        For J:=I+1 to N do
+        If Abs (A [I,I])<Abs (A [J,I]) then
+          Begin
+            Temp:=A [I];
+            A [I]:=A [J];
+            A [J]:=Temp;
+            Temp:=B [I];
+            B [I]:=B [J];
+            B [J]:=Temp
+          End;
+          If A [I,I]=0 then Exit;
+          Factor:=A [I,I];
+          For J:=N downto 1 do
+            Begin
+              B [I,J]:=B [I,J]/Factor;
+              A [I,J]:=A [I,J]/Factor
+            End;
+            For J:=I+1 to N do
+              Begin
+                Factor:=-A [J,I];
+                For K:=1 to N do
+                  Begin
+                     A [J,K]:=A [J,K]+A [I,K]*Factor;
+                     B [J,K]:=B [J,K]+B [I,K]*Factor
+                   End
+               End
+      End;
+      For I:=N downto 2 do
+      Begin
+        For J:=I-1 downto 1 do
+        Begin
+          Factor:=-A [J,I];
+          For K:=1 to N do
+            Begin
+              A [J,K]:=A [J,K]+A [I,K]*Factor;
+              B [J,K]:=B [J,K]+B [I,K]*Factor
+            End
+        End
+      End;
+         { A:=B;    }
+      InversionOK:=True
+End;
+
+procedure TForm1.motion;
+begin
+  m[1,1]:=I1+m1*sqr(a1)+I2+m2*(sqr(l1)+sqr(a2)+2*l1*a2*cos(theta2))+I3+m3*(sqr(l1)+sqr(l2)+sqr(a3)+2*l1*l2*cos(theta2)+2*l2*a3*cos(theta3)+2*l1*a3*cos(theta3-theta2));
+  m[1,2]:=-I2-m2*(sqr(a2)+l1*a2*cos(theta2))-I3-m3*(sqr(l2)-sqr(a3)-l1*l2*cos(theta2)-2*l2*a3*cos(theta3)-l1*a3*cos(theta3-theta2));
+  m[1,3]:=I3+m3*(sqr(a3)-l2*a3*cos(theta3)+l1*a3*cos(theta3-theta2));
+
+  m[2,1]:=-I2-m2*(sqr(a2)+l1*a2*cos(theta2))-I3-m3*(sqr(l2)+sqr(a3)+l1*l2*cos(theta2)+2*l2*a3*cos(theta3)+l1*a3*cos(theta3-theta2));
+  m[2,2]:=I2+m2*sqr(a2)+I3+m3*(sqr(l2)+sqr(a3)+2*l2*a3*cos(theta3));
+  m[2,3]:=-I3-m3*(sqr(a3)+l2*a3*cos(theta3));
+
+  m[3,1]:=I3+m3*(sqr(a3)+l2*a3*cos(theta3)+l1*a3*cos(theta3-theta2));
+  m[3,2]:=-I3-m3*(sqr(a3)+l2*a3*cos(theta3));
+  m[3,3]:=I3+m3*sqr(a3);
+
+  c[1,1]:=0;
+  c[1,2]:=0;
+  c[1,3]:=0;
+
+  c[2,1]:=-m2*l1*a2*thetadot1*sin(theta2)-m3*l1*l2*thetadot1*sin(theta2)+m3*l1*a3*thetadot1*sin(theta3-theta2);
+  c[2,2]:=m2*l1*a2*thetadot1*sin(theta2)+m3*l1*a3*thetadot1*sin(theta3-theta2)+m3*l1*l2*thetadot1*sin(theta2);
+  c[2,3]:=m3*l1*a3*thetadot1*sin(theta3-theta2);
+
+  c[3,1]:=m2*l2*a3*(2*thetadot2-thetadot1)*sin(theta3)-m3*l1*a3*thetadot1*sin(theta3-theta2);
+  c[3,2]:=-m2*l2*a3*thetadot2*sin(theta3)+m3*l1*a3*thetadot1*sin(theta3-theta2);
+  c[3,3]:=m2*l2*a3*(thetadot2-thetadot1)*sin(theta3)-m3*l1*a3*thetadot1*sin(theta3-theta2);
+
+  gra[1]:=m1*g1*a1*sin(theta1)+m2*g1*(l1*sin(theta1)-a2*sin(theta2-theta1))+m3*g1*(l1*sin(theta1)-l2*sin(theta2-theta1)+a3*sin(theta1-theta2+theta3));
+  gra[2]:=m2*g1*a2*sin(theta2-theta1)+m3*g1*(l2*sin(theta2-theta1)-a3*sin(theta1-theta2+theta3));
+  gra[3]:=m3*g1*a3*sin(theta1-theta2+theta3);
+end;
+
+procedure glBindTexture(target: GLenum; texture: GLuint); stdcall; external opengl32;
+procedure TForm1.SetupPixelFormat;
+var    hHeap: THandle;
+  nColors, i: Integer;
+  lpPalette : PLogPalette;
+  byRedMask, byGreenMask, byBlueMask: Byte;
+  nPixelFormat: Integer;
+  pfd: TPixelFormatDescriptor;
+begin
+  FillChar(pfd, SizeOf(pfd), 0);
+  with pfd do begin
+    nSize     := sizeof(pfd);               // Länge der pfd-Struktur
+    nVersion  := 1;                         // Version
+    dwFlags   := PFD_DRAW_TO_WINDOW or PFD_SUPPORT_OPENGL or
+                 PFD_DOUBLEBUFFER;          // Flags
+    iPixelType:= PFD_TYPE_RGBA;             // RGBA Pixel Type
+    cColorBits:= 32;                        // 24-bit color
+    cDepthBits:= 32;                        // 32-bit depth buffer
+    iLayerType:= PFD_MAIN_PLANE;            // Layer Type
+  end;
+  nPixelFormat:= ChoosePixelFormat(myDC, @pfd);
+  SetPixelFormat(myDC, nPixelFormat, @pfd);
+                                            // Farbpalettenoptimierung wenn erforderlich
+  DescribePixelFormat(myDC, nPixelFormat,
+                      sizeof(TPixelFormatDescriptor),pfd);
+  if ((pfd.dwFlags and PFD_NEED_PALETTE) <> 0) then begin
+    nColors  := 1 shl pfd.cColorBits;
+    hHeap    := GetProcessHeap;
+    lpPalette:= HeapAlloc
+       (hHeap,0,sizeof(TLogPalette)+(nColors*sizeof(TPaletteEntry)));
+    lpPalette^.palVersion := $300;
+    lpPalette^.palNumEntries := nColors;
+    byRedMask  := (1 shl pfd.cRedBits) - 1;
+    byGreenMask:= (1 shl pfd.cGreenBits) - 1;
+    byBlueMask := (1 shl pfd.cBlueBits) - 1;
+   for i := 0 to nColors - 1 do begin
+      lpPalette^.palPalEntry[i].peRed  :=
+        (((i shr pfd.cRedShift)  and byRedMask)  *255)DIV byRedMask;
+      lpPalette^.palPalEntry[i].peGreen:=
+        (((i shr pfd.cGreenShift)and byGreenMask)*255)DIV byGreenMask;
+      lpPalette^.palPalEntry[i].peBlue :=
+        (((i shr pfd.cBlueShift) and byBlueMask) *255)DIV byBlueMask;
+      lpPalette^.palPalEntry[i].peFlags:= 0;
+    end;
+    myPalette:= CreatePalette(lpPalette^);
+    HeapFree(hHeap, 0, lpPalette);
+    if (myPalette <> 0) then begin
+      SelectPalette(myDC, myPalette, False);
+      RealizePalette(myDC);
+    end;
+  end;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  theta:=30*pi/180;
+  phi:=20*pi/180;
+  thetadot:=0;
+  phidot:=0;
+
+  form1.myDC:= GetDC(Handle);
+  SetupPixelFormat;
+  myRC:= wglCreateContext(myDC);
+  wglMakeCurrent(myDC, myRC);
+  glEnable(GL_DEPTH_TEST);
+  glLoadIdentity;
+
+  glClearColor(0.0, 0.0, 0.0, 1.0); // Black Background
+  glShadeModel(GL_SMOOTH); // Enables Smooth Color Shading
+  glClearDepth(1.0); // Depth Buffer Setup
+  glEnable(GL_DEPTH_TEST); // Enable Depth Buffer
+  glDepthFunc(GL_LESS); // The Type Of Depth Test To Do
+
+  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+  glEnable(GL_TEXTURE_2D);
+
+  Sphere := gluNewQuadric();
+  cylinder:= gluNewQuadric();
+  disk:=glunewquadric();
+  partialdisk:=glunewquadric();
+  gluQuadricNormals(Sphere, GLU_SMOOTH); // Create Smooth Normals
+  gluQuadricNormals(cylinder, GLU_SMOOTH); // Create Smooth Normals
+  gluQuadricNormals(disk, GLU_SMOOTH); // Create Smooth Normals
+
+  glMaterialfv(GL_FRONT, GL_SPECULAR, @mat_specular);
+  glMaterialfv(GL_BACK, GL_SPECULAR, @mat_specular);
+  glMaterialfv(GL_FRONT, GL_SHININESS, @mat_shininess);
+  glMaterialfv(GL_BACK, GL_SHININESS, @mat_shininess);
+  glLightfv(GL_LIGHT0, GL_POSITION, @light_position);
+  glLightfv(GL_LIGHT3, GL_SPECULAR, @mat_specular);
+  glLightfv(GL_LIGHT1, GL_POSITION, @light_position);
+  glLightfv(GL_LIGHT2, GL_POSITION, @light_position);
+
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_LIGHT1);
+  glEnable(GL_LIGHT2);
+  glEnable(GL_LIGHT3);
+  glDepthFunc(GL_LEQUAL);
+
+  rotangle1:=90;
+  rotangle:=90;
+  rotangle3:=180;
+  rotangle2:=90;
+  xpos:=-5;
+  ypos:=4;
+  zpos:=-15;
+  timer1.Enabled:=false;
+  timer2.enabled:=false;
+end;
+
+procedure TForm1.FormResize(Sender: TObject);
+begin
+  glViewport(0, 0, Width, Height);    // Setzt den Viewport für das OpenGL Fenster
+  glMatrixMode(GL_PROJECTION);        // Matrix Mode auf Projection setzen
+  glLoadIdentity();                   // Reset View
+  gluPerspective(45.0, Width/Height, 1, 100.0);  // Perspektive den neuen Maßen anpassen.
+  glMatrixMode(GL_MODELVIEW);         // Zurück zur Modelview Matrix
+  glLoadIdentity();
+end;
+
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  wglmakecurrent(0,0);
+  wgldeletecontext(mydc);
+  releasedc(handle,mydc);
+end;
+
+procedure render;
+var
+  panjang,panjang1, panjang2,tp,tl,tt,jarip,jarip1,jarip2,jarispace:real;
+begin
+  glClearColor(0.0, 0.0, 0.0, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity;
+  glenable(gl_lighting);
+  gltranslate(xpos,ypos,zpos);
+  glrotate(pitch,0,0,1); //pitch angle sudut dongak  pooros sb z
+  glrotate(yaw,0,1,0); //yaw heading angle, poros sumbu y, kiri kanan
+  glrotate(roll,1,0,0); //roll angle sudut memutar, sumbu x
+  panjang:=4;
+  panjang1:=3;
+  panjang2:=1;
+  tp:=1.25;
+  tl:=0.5;
+  tt:=0.175;
+  // glrotate(90,1,0,0); //to result pendulum in sagittal plane, z axis rotated around x axis
+  //upper arm rotation
+  //  glrotate(0,0,1,0);//sagittal plane xy  around y alias z
+  glrotate(rotangle,1,0,0);//frontal plane xy around x axis
+   glrotate(hip_angle,0,1,0);
+  glpushmatrix();
+  gluSphere(sphere,0.65,32 ,32 );  //joint 1 center
+  gluCylinder(cylinder, 0.65, 0.35, panjang, 32, 32); // upper arm long cylinder
+  gltranslate(0,0,panjang);
+  gluSphere(sphere,0.38,32 ,32 );//joint 2 center
+
+  //lower arm rotation
+  //   glrotate(30,1,0,0); // lower arm rotation around x axis yz frontal plane
+  glpushmatrix();
+  glrotate(knee_angle,0,1,0);
+  gluCylinder(cylinder, 0.35, 0.32, panjang1, 32, 32); // lower arm long cylinder
+  gltranslate(0,0,panjang1);
+  //joint#3 wrist joint
+  //   glrotate(60,0,1,0);
+  gluSphere(sphere,0.32, 32 ,32 );//joint 3 center wrist joint
+  glpushmatrix();
+  glrotate(270,0,1,0);
+  glrotate(ankle_angle,0,1,0);
+  gluCylinder(cylinder, 0.30, 0.26, panjang2, 32, 32); // hand segment
+  gltranslate(0,0,panjang2);
+  glusphere(sphere,0.26,32,32);
+  glpopmatrix();
+  swapBuffers(form1.myDC);
+end;
+
+procedure gambar(io:extended;io1:extended;io2:extended);
+var
+  panjang,panjang1, panjang2,tp,tl,tt,jarip,jarip1,jarip2,jarispace:real;
+begin
+  io:=io*180/pi;
+  io1:=io1*180/pi;
+  io2:=io2*180/pi;
+  glClearColor(0.0, 0.0, 0.0, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity;
+  glenable(gl_lighting);
+  gltranslate(xpos,ypos,zpos);
+  glrotate(pitch,0,0,1); //pitch angle sudut dongak  pooros sb z
+  glrotate(yaw,0,1,0); //yaw heading angle, poros sumbu y, kiri kanan
+  glrotate(roll,1,0,0); //roll angle sudut memutar, sumbu x
+  panjang:=4;
+  panjang1:=3;
+  panjang2:=1;
+  tp:=1.25;
+  tl:=0.5;
+  tt:=0.175;
+  // glrotate(90,1,0,0); //to result pendulum in sagittal plane, z axis rotated around x axis
+  //upper arm rotation
+  //  glrotate(0,0,1,0);//sagittal plane xy  around y alias z
+  glrotate(rotangle,1,0,0);//frontal plane xy around x axis
+  glrotate(io,0,1,0);
+  glpushmatrix();
+  gluSphere(sphere,0.65,32 ,32 );  //joint 1 center
+  gluCylinder(cylinder, 0.65, 0.35, panjang, 32, 32); // upper arm long cylinder
+  gltranslate(0,0,panjang);
+  gluSphere(sphere,0.38,32 ,32 );//joint 2 center
+
+  //lower arm rotation
+  //   glrotate(30,1,0,0); // lower arm rotation around x axis yz frontal plane
+  glpushmatrix();
+  glrotate(io1,0,1,0);
+  gluCylinder(cylinder, 0.35, 0.32, panjang1, 32, 32); // lower arm long cylinder
+  gltranslate(0,0,panjang1);
+  //joint#3 wrist joint
+  //   glrotate(60,0,1,0);
+  gluSphere(sphere,0.32, 32 ,32 );//joint 3 center wrist joint
+  glpushmatrix();
+  glrotate(270,0,1,0);
+  glrotate(io2,0,1,0);
+  gluCylinder(cylinder, 0.30, 0.26, panjang2, 32, 32); // hand segment
+  gltranslate(0,0,panjang2);
+  glusphere(sphere,0.26,32,32);
+  glpopmatrix();
+  swapBuffers(form1.myDC);
+end;
+
+procedure TForm1.SpinEdit1Change(Sender: TObject);
+begin
+  pitch:=spinedit1.value;
+end;
+
+procedure TForm1.SpinEdit2Change(Sender: TObject);
+begin
+  yaw:=spinedit2.Value;
+end;
+
+procedure TForm1.SpinEdit3Change(Sender: TObject);
+begin
+  roll:=spinedit3.value;
+end;
+
+procedure TForm1.close1Click(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  hip_angle:=spinedit4.value;
+  knee_angle:=-(spinedit5.value);
+  ankle_angle:=spinedit6.value;
+  render;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  hip0, knee0, ankle0 : extended;
+begin
+  hip0  :=spinedit4.value*pi/180;
+  knee0 :=spinedit5.value*pi/180;
+  ankle0:=spinedit6.value*pi/180;
+
+  theta1:=hip0;
+  theta2:=knee0;
+  theta3:=ankle0;
+
+  thetadot1:=0;
+  thetadot2:=0;
+  thetadot3:=0;
+
+  thetadotdot1:=0;
+  thetadotdot2:=0;
+  thetadotdot3:=0;
+
+  angle[1]:=theta1;
+  angle[2]:=theta2;
+  angle[3]:=theta3;
+
+  vel[1]:=thetadot1;
+  vel[2]:=thetadot2;
+  vel[3]:=thetadot3;
+
+
+  accl[1]:=thetadotdot1;
+  accl[2]:=thetadotdot2;
+  accl[3]:=thetadotdot3;
+
+
+  cp[1]:=3.09;
+  cp[2]:=10.0;
+  cp[3]:=0.943;
+  k1p[1]:=2.6;
+  k1p[2]:=6.1;
+  k1p[3]:=2.0;
+  k2p[1]:=5.8;
+  k2p[2]:=5.9;
+  k2p[3]:=5;
+  k3p[1]:=8.7;
+  k3p[2]:=10.5;
+  k3p[3]:=2.0;
+  k4p[1]:=1.3;
+  k4p[2]:=21.8;
+  k4p[3]:=5.0;
+  phi1[1]:=-10*pi/180;
+  phi1[2]:=6*pi/180;
+  phi1[3]:=-15*pi/180;
+  phi2[1]:=10*pi/180;
+  phi2[2]:=137*pi/180;
+  phi2[3]:=25*pi/180;
+
+  lm1:=lopt1;
+  lm2:=lopt2;
+  s1 := 1;
+  s2 := 0;
+  t := 0;
+
+  timer2.enabled:=true;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+ timer1.Enabled:=false;
+ timer2.enabled:=false;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  render;
+end;
+
+procedure TForm1.Timer2Timer(Sender: TObject);
+var
+  i, j, k: integer;
+begin
+  t := 0;
+  if radiobutton1.Checked then
+  begin
+    if (angle[2] > 100*pi/180) then
+    begin
+      s1 := 0;
+      s2 := 1;
+    end;
+    if (angle[2] < 30*pi/180) then
+    begin
+      s1 := 1;
+      s2 := 0;
+    end;
+    while t<0.01 do
+    begin
+      u1:=0.5*tanh(5*(s1-0.5)) +0.5;
+      adot1:=1/tr*(u1-act1)+1/tf*(u1-act1-(u1-act1)*u1);
+      act1:=act1+adot1*dt;
+
+      u2:=0.5*tanh(5*(s2-0.5)) +0.5;
+      adot2:=1/tr*(u2-act2)+1/tf*((u2-act2)-((u2-act2)*u2));
+      act2:=act2+adot2*dt;
+
+      lm1:=lm1+rf1*(angle_sblm[2]-angle[2]);
+      lm2:=lm2+rf2*(angle[2]-angle_sblm[2]);
+
+      flr1:=1-sqr((lm1-lopt1)/(0.5*lopt1));
+      if flr1<0 then flr1:=0;
+      flr2:=1-sqr((lm2-lopt2)/(0.5*lopt2));
+      if flr2<0 then flr2:=0;
+
+      v1:=vel[2]*rf1;
+      v2:=vel[2]*rf2;
+
+      if lm1<=lopt1 then
+        fvr1:=(vmax1-v1)/(vmax1+cm*v1)
+      else
+        fvr1:=1.3-0.3*(vmax1-cm*vmax1)/(1+sqr(cm)*v1);
+      if fvr1<0 then
+        flr1:=0;
+
+      if lm2<=lopt2 then
+        fvr2:=(vmax2-v2)/(vmax2+cm*v2)
+      else
+        fvr2:=1.3-0.3*(vmax2-cm*vmax2)/(1+sqr(cm)*v2);
+
+      ftot1:=act1*flr1*fvr1*fmax1;
+      ftot2:=act2*flr2*fvr2*fmax2;
+
+      if ftot1<0 then ftot1:=0;
+      if ftot2<0 then ftot2:=0;
+
+      mpe1:=kdamp1*rf1*vel[2];
+      mpd1:=kstf1*exp(15*(lm1-lopt1)-1);
+
+      mpe2:=kdamp2*rf2*vel[2];
+      mpd2:=kstf2*exp(15*(lm2-lopt2)-1);
+
+      m_otot1:=(ftot1-mpd1+mpe1)*rf1;
+      m_otot2:=(ftot2-mpd2+mpe2)*rf2;
+
+      m_pasif[1]:=-cp[1]*vel[1]+k1p[1]*exp(-k2p[1]*(angle[1]-phi1[1]))
+                  -k3p[1]*exp(-k4p[1]*(phi2[1]-angle[1]));
+      m_pasif[2]:=-cp[2]*vel[2]+k1p[2]*exp(-k2p[2]*(angle[2]-phi1[2]))
+                  -k3p[2]*exp(-k4p[2]*(phi2[2]-angle[2]));
+      m_pasif[3]:=-cp[3]*vel[3]+k1p[3]*exp(-k2p[3]*(angle[3]-phi1[3]))
+                  -k3p[3]*exp(-k4p[3]*(phi2[3]-angle[3]));
+
+      torque[1]:=m_pasif[1];
+      torque[2]:=m_pasif[2];
+      torque[3]:=m_pasif[3];
+
+      torque[2]:=m_otot1-m_otot2+torque[2];
+
+      {first to get k1}
+      motion;
+      {solving motion equations}
+      matrixinversion(m,3);
+      matrixmultiplication1(b,torque,3);
+      term1:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication(b,c,3);
+      matrixmultiplication1(ab,vel,3);
+      term2:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication1(b,gra,3);
+      term3:=ab1;
+
+      for j:= 1 to max do
+      begin
+        accl[j]:=term1[j]+term2[j]-term3[j];
+      end;
+
+
+      for j:= 1 to max do
+      begin
+        k1[j]:=0.5*dt*accl[j];
+      end;
+
+
+      {second, to get k2}
+      theta1:=theta1+0.5*dt*(thetadot1+0.5*k1[1]);
+      theta2:=theta2+0.5*dt*(thetadot2+0.5*k1[2]);
+      theta3:=theta3+0.5*dt*(thetadot3+0.5*k1[3]);
+
+
+      thetadot1:=thetadot1+k1[1];
+      thetadot2:=thetadot2+k1[2];
+      thetadot3:=thetadot3+k1[3];
+
+      motion;
+      {solving motion equations}
+      matrixinversion(m,3);
+      matrixmultiplication1(b,torque,3);
+      term1:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication(b,c,3);
+      matrixmultiplication1(ab,vel,3);
+      term2:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication1(b,gra,3);
+      term3:=ab1;
+
+      for j:= 1 to max do
+      begin
+        accl[j]:=term1[j]+term2[j]-term3[j];
+      end;
+
+      for j:= 1 to max do
+      begin
+        k2[j]:=0.5*dt*accl[j];
+      end;
+
+      {third, to get k3}
+      theta1:=theta1+0.5*dt*(thetadot1+0.5*k1[1]);
+      theta2:=theta2+0.5*dt*(thetadot2+0.5*k1[2]);
+      theta3:=theta3+0.5*dt*(thetadot3+0.5*k1[3]);
+
+      thetadot1:=thetadot1+k2[1];
+      thetadot2:=thetadot2+k2[2];
+      thetadot3:=thetadot3+k2[3];
+
+      motion;
+      {solving motion equations}
+      matrixinversion(m,3);
+      matrixmultiplication1(b,torque,3);
+      term1:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication(b,c,3);
+      matrixmultiplication1(ab,vel,3);
+      term2:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication1(b,gra,3);
+      term3:=ab1;
+
+      for j:= 1 to max do
+      begin
+        accl[j]:=term1[j]+term2[j]-term3[j];
+      end;
+
+      for j:= 1 to max do
+      begin
+        k3[j]:=0.5*dt*accl[j];
+      end;
+
+      {fourth, to get k4}
+      theta1:=theta1+dt*(thetadot1+k3[1]);
+      theta2:=theta2+dt*(thetadot2+k3[2]);
+      theta3:=theta3+dt*(thetadot3+k3[3]);
+
+      thetadot1:=thetadot1+2*k3[1];
+      thetadot2:=thetadot2+2*k3[2];
+      thetadot3:=thetadot3+2*k3[3];
+
+      motion;
+      {solving motion equations}
+      matrixinversion(m,3);
+      matrixmultiplication1(b,torque,3);
+      term1:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication(b,c,3);
+      matrixmultiplication1(ab,vel,3);
+      term2:=ab1;
+
+      matrixinversion(m,3);
+      matrixmultiplication1(b,gra,3);
+      term3:=ab1;
+
+      for j:= 1 to max do
+      begin
+        accl[j]:=term1[j]+term2[j]-term3[j];
+      end;
+
+      for j:= 1 to max do
+      begin
+        k4[j]:=0.5*dt*accl[j];
+      end;
+
+      for j:= 1 to max do
+      begin
+      angle_sblm[j]:= angle[j];
+        angle[j]:=angle[j]+dt*(vel[j]+1/3*(k1[j]+k2[j]+k3[j]));
+      end;
+
+      for j:= 1 to max do
+      begin
+        vel[j]:=vel[j]+1/3*(k1[j]+2*k2[j]+2*k3[j]+k4[j]);
+      end;
+
+      theta1:=angle[1];
+      theta2:=angle[2];
+      theta3:=angle[3];
+
+      thetadot1:=vel[1];
+      thetadot2:=vel[2];
+      thetadot3:=vel[3];
+
+      thetadotdot1:=accl[1];
+      thetadotdot2:=accl[2];
+      thetadotdot3:=accl[3];
+      t:=t+dt;
+//    hip_angle:=theta1;
+//    knee_angle:=theta2;
+//    ankle_angle:=theta3;
+    end;
+  end;
+  time:=time+0.01;
+  gambar(theta1,theta2,theta3);
+  series1.AddXY(time, theta1*180/pi);
+  series2.AddXY(time, theta2*180/pi);
+  series3.AddXY(time, theta3*180/pi);
+  series4.AddXY(time, torque[1]);
+  series5.AddXY(time, torque[2]);
+  series6.AddXY(time, torque[3]);
+  series7.AddXY(torque[1], lm1);
+  series8.AddXY(lm1, flr1);
+  series9.AddXY(lm1, fvr1);
+
+end;
+
+end.
