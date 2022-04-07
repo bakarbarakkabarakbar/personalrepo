@@ -1,9 +1,47 @@
 # personalrepo
-Welcome to My Github Repository!
+### Welcome to My Github Repository!
 
 Here, you can see all code that I have written or modify for the past four years in undergraduate program. Currently, I am majoring on Biomedical Engineering, all my project is related to the at least medical stuff or something like that. 
-There are at least several project that I have done, I name it on the folder, so you can see more easily, for the on going project I put it on the seperated branch so, this `master` branch only contain the final version of my project. But, these not limited to all circumstances, I can make changes if there something that I need to add to the code.
 
-Big shout out to all my friend, who keep me motivated all the time, this repo is nothing without you guys. If you found that your code or all your work here and you feel that you can't share it to the public, please text me and I will remove it on my repository.
+### Listed Project
+There are few names that stands out from the other project I have done. For example, heart rate detection, or discrete wavelet transform. As listed below, this is my thought about project completion.
+- 2d fourier transform - *None*
+- artificial neural network - *None*
+- auto correlation and cross correlation - *None*
+- butterworth low pass filter second order - *None*
+- continuous wavelet transform - *None*
+- counting days - *None*
+- discrete fourier transform - *None*
+- discrete wavelet transform - *v0.8 Alpha Commented*
+- double pendulum - *None*
+- ecg syntesis - *None*
+- euler midpoint heuns root finding - *None*
+- fast fourier transform - *None*
+- fuzzy logic four membership - *None*
+- hackerrank - *None*
+- heart rate detection - *None*
+- hospital database system - *None*
+- human modelling using open gl - *None*
+- invers matrix calculation - *None*
+- java - *None*
+- kalman filter exploration - *None*
+- knee joint movement - *None*
+- linear prediction and correlation - *None*
+- logic gate xor - *None*
+- low pass filter - *None*
+- lower limb filtering - *None*
+- matrix calculation - *None*
+- multilayer perception backpropagatin algorithm - *None*
+- opengl - *None*
+- playment billing - *None*
+- regression method - *None*
+- resting length - *None*
+- runge kutta - *None*
+- short time fourier transform - *None*
+- shoulder joint movement - *None*
+- support vector machine random forest - *None*
+- two analog input nodemcu - *None*
+- window fourier qrs analysis - *None*
+
 
 Fell free to give me feedback or send pull request if you have some modification.
